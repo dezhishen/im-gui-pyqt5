@@ -23,3 +23,13 @@
 * [ ] 发送消息
 * [ ] 接收消息
 * [ ] 界面拓展接口
+
+## 开发环境
+进入项目根目录
+1.`py -3 -m venv env`
+2.`pip install -r requirements.txt`
+
+如有包变动,请开发人员执行`pip freeze > requirements.txt`保证包的依赖不出现问题
+
+## 注意事项
+本项目版本管理较为粗狂,仅保证[`releases`](https://github.com/dezhiShen/im-gui-pyqt5/releases)可用
