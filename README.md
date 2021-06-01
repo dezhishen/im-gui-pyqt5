@@ -37,7 +37,7 @@
             ...
         }
         ```
-    - pycharm下,打开项目设置,选择虚拟环境到`.env`
+    - pycharm下,打开项目设置,选择虚拟环境到`env`
 - `pip install -r requirements.txt`
 
 
