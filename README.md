@@ -26,8 +26,20 @@
 
 ## 开发环境
 进入项目根目录
-1.`py -3 -m venv env`
-2.`pip install -r requirements.txt`
+- `py -3 -m venv env`
+- 设置当前项目的开发环境为`env`目录
+    - vscode下,`.vscode/settings.json`
+        ```
+        {
+            ...
+            // windows环境
+            "python.pythonPath": ".\\env\\Scripts\\python.exe"
+            ...
+        }
+        ```
+    - pycharm下,打开项目设置,选择虚拟环境到`.env`
+- `pip install -r requirements.txt`
+
 
 如有包变动,请开发人员执行`pip freeze > requirements.txt`保证包的依赖不出现问题
 
