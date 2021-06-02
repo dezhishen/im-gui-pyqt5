@@ -25,6 +25,7 @@ class ChatInput(QWidget):
     def initUI(self):
         # toolbar
         toolbar = QToolBar()
+        toolbar.setStyleSheet("QToolBar{spacing:8px;}")
         imageSvg = QtSvg.QSvgWidget("./assets/icons/tupian.svg")
         imageSvg.setMaximumSize(QSize(20, 20))
         toolbar.addWidget(imageSvg)
