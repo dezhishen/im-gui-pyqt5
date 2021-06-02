@@ -1,3 +1,8 @@
 QToolBar{
-    spacing:8px;
+    spacing: 8px;
+}
+
+QToolBar QSvgWidget{
+    max-width: 20px;
+    max-height: 20px;
 }

@@ -1,6 +1,5 @@
 import sys
 from typing import List
-from PyQt5.QtCore import QSize
 from tools.FileUtil import FileUtil
 from im_ui.ChatInput import ChatInput
 from PyQt5.QtWidgets import QApplication
@@ -23,7 +22,6 @@ if __name__ == '__main__':
     chat_input = ChatInput(message_send_handler=TestSender())
     # 自定义 toolbar的按钮
     fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
-    fileSvg.setMaximumSize(QSize(20, 20))
     chat_input.toolbar().addWidget(fileSvg)
     # 展示
     chat_input.setWindowTitle("输入框示例")

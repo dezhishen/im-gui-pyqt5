@@ -4,7 +4,7 @@ from im_instance.MessageSenderInstance import MessageSenderInstance
 from im_instance.Entity import Message
 
 from PyQt5 import QtSvg
-from PyQt5.QtCore import QSize
+# from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import (QTextEdit, QToolBar, QWidget, QPushButton,
                              QHBoxLayout, QVBoxLayout)
 
@@ -26,7 +26,6 @@ class ChatInput(QWidget):
         # toolbar
         toolbar = QToolBar()
         imageSvg = QtSvg.QSvgWidget("./assets/icons/tupian.svg")
-        imageSvg.setMaximumSize(QSize(20, 20))
         toolbar.addWidget(imageSvg)
         self.__toolbar = toolbar
         # 按钮组
