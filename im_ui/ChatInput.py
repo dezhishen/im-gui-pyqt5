@@ -1,5 +1,4 @@
 import sys
-import typing
 
 from im_instance.MessageSenderInstance import MessageSenderInstance
 from im_instance.Entity import Message
@@ -18,23 +17,21 @@ class ChatInput(QWidget):
     __text_edit = None
     __message_send_handler = None
 
-    def __init__(self, parent: typing.Optional[QWidget],
-                 message_send_handler: MessageSenderInstance):
+    def __init__(self, message_send_handler: MessageSenderInstance):
         super().__init__()
         self.__message_send_handler = message_send_handler
-        self.initUI(parent)
+        self.initUI()
 
-    def initUI(self, parent: QWidget):
+    def initUI(self):
         # toolbar
-        toolbar = QToolBar(parent)
+        toolbar = QToolBar()
         imageSvg = QtSvg.QSvgWidget("./assets/icons/tupian.svg")
-        imageSvg.setParent(parent)
         imageSvg.setMaximumSize(QSize(20, 20))
         toolbar.addWidget(imageSvg)
         self.__toolbar = toolbar
         # 按钮组
-        closeButton = QPushButton(parent=parent, text="关闭")
-        sendButton = QPushButton(parent=parent, text="发送")
+        closeButton = QPushButton("关闭")
+        sendButton = QPushButton("发送")
         sendButton.clicked.connect(self.send_button_click)
         bottonsHbox = QHBoxLayout()
         bottonsHbox.addStretch(1)
@@ -42,7 +39,7 @@ class ChatInput(QWidget):
         bottonsHbox.addWidget(sendButton)
         mainBox = QVBoxLayout()
         mainBox.addWidget(toolbar)
-        text_edit = QTextEdit(parent)
+        text_edit = QTextEdit()
         text_edit.setAcceptRichText(False)
         self.__text_edit = text_edit
         mainBox.addWidget(text_edit)

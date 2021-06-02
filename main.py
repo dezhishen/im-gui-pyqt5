@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtCore import QSize
 from im_ui.ChatInput import ChatInput
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QApplication
 from im_instance.Entity import Message
 from im_instance.MessageSenderInstance import MessageSenderInstance
 from PyQt5 import QtSvg
@@ -15,19 +15,14 @@ class TestSender(MessageSenderInstance):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-
-    root_widget = QWidget()
-    root_widget.setStyleSheet("QToolBar{spacing:20px;}")
-
+    app.setStyleSheet("QToolBar{spacing:40px;}")
     # 输入框初始化
-    chat_input = ChatInput(parent=root_widget,
-                           message_send_handler=TestSender())
+    chat_input = ChatInput(message_send_handler=TestSender())
     # 自定义 toolbar的按钮
     fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
     fileSvg.setMaximumSize(QSize(20, 20))
     chat_input.toolbar().addWidget(fileSvg)
-
     # 展示
-    root_widget.setWindowTitle("输入框示例")
-    root_widget.show()
+    chat_input.setWindowTitle("输入框示例")
+    chat_input.show()
     sys.exit(app.exec_())
