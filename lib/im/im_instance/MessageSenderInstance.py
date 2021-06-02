@@ -7,5 +7,5 @@ class MessageSenderInstance(object):
     发送消息
     """
     @abstractmethod
-    def send(self, message: Message):
+    def send(self, messages: list[Message]):
         pass
