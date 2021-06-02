@@ -1,14 +1,31 @@
 import sys
 
+from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt
+
 from im_instance.MessageSenderInstance import MessageSenderInstance
 from im_instance.Entity import Message
 
 from PyQt5 import QtSvg
 # from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import (QTextEdit, QToolBar, QWidget, QPushButton,
-                             QHBoxLayout, QVBoxLayout)
+from PyQt5.QtWidgets import (QApplication, QTextEdit, QToolBar, QWidget,
+                             QPushButton, QHBoxLayout, QVBoxLayout)
 
 sys.path.append("../")
+
+
+class ChatTextEdit(QTextEdit):
+    def __init__(self, parent):
+        QtWidgets.QTextEdit.__init__(self)
+        self.parent = parent
+
+    def keyPressEvent(self, event):
+        QtWidgets.QTextEdit.keyPressEvent(self, event)
+        if event.key() == Qt.Key_Return:
+            if int(QApplication.keyboardModifiers()) == 0:
+                self.parent.send_msg()
+            elif QApplication.keyboardModifiers() == Qt.ControlModifier:
+                self.textCursor().insertText("\n")
 
 
 class ChatInput(QWidget):
@@ -31,15 +48,15 @@ class ChatInput(QWidget):
         toolbar.addWidget(imageSvg)
         self.__toolbar = toolbar
         # 按钮组
-        closeButton = QPushButton("关闭")
+        # closeButton = QPushButton("关闭")
         sendButton = QPushButton("发送")
-        sendButton.clicked.connect(self.send_button_click)
+        sendButton.clicked.connect(self.send_msg)
         bottonsHbox = QHBoxLayout()
         bottonsHbox.addStretch(1)
-        bottonsHbox.addWidget(closeButton)
+        # bottonsHbox.addWidget(closeButton)
         bottonsHbox.addWidget(sendButton)
         # 输入文本框
-        text_edit = QTextEdit()
+        text_edit = ChatTextEdit(self)
         text_edit.setAcceptRichText(False)
         self.__text_edit = text_edit
         # 整体布局
@@ -50,7 +67,7 @@ class ChatInput(QWidget):
         # 设置布局
         self.setLayout(mainBox)
 
-    def send_button_click(self):
+    def send_msg(self):
         message_content_str = self.__text_edit.toPlainText()
         if message_content_str is None or message_content_str == "":
             return
