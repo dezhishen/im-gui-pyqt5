@@ -1,5 +1,8 @@
 from abc import abstractmethod
-from lib.im.im_instance.Entity import Message
+from im_instance.Entity import Message
+import sys
+
+sys.path.append("../")
 
 
 class MessageSenderInstance(object):

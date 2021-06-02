@@ -1,18 +1,20 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-
-from lib.im.im_instance.MessageSenderInstance import MessageSenderInstance
 import sys
+
+from im_instance.MessageSenderInstance import MessageSenderInstance
+from im_instance.Entity import Message
+
 from PyQt5 import QtSvg
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import (QTextEdit, QToolBar, QWidget, QPushButton,
-                             QHBoxLayout, QVBoxLayout, QApplication)
+                             QHBoxLayout, QVBoxLayout)
+
+sys.path.append("../")
 
 
 class ChatInput(QWidget):
 
     __toolbar = None
-    __textEdit = None
+    __text_edit = None
     __message_send_handler = None
 
     def __init__(self, message_send_handler: MessageSenderInstance):
@@ -30,16 +32,17 @@ class ChatInput(QWidget):
         # 按钮组
         closeButton = QPushButton("关闭")
         sendButton = QPushButton("发送")
+        sendButton.clicked.connect(self.send_button_click)
         bottonsHbox = QHBoxLayout()
         bottonsHbox.addStretch(1)
         bottonsHbox.addWidget(closeButton)
         bottonsHbox.addWidget(sendButton)
         mainBox = QVBoxLayout()
         mainBox.addWidget(toolbar)
-        textEdit = QTextEdit()
-        textEdit.setAcceptRichText(False)
-        self.__textEdit = textEdit
-        mainBox.addWidget(textEdit)
+        text_edit = QTextEdit()
+        text_edit.setAcceptRichText(False)
+        self.__text_edit = text_edit
+        mainBox.addWidget(text_edit)
         # mainBox.addStretch(1)
         mainBox.addLayout(bottonsHbox)
         self.setLayout(mainBox)
@@ -47,24 +50,23 @@ class ChatInput(QWidget):
         self.setWindowTitle('Buttons')
         self.show()
 
-    @property
-    def textEdit(self):
-        return self.__textEdit
+    def send_button_click(self):
+        message_content_str = self.__text_edit.toPlainText()
+        if message_content_str is None or message_content_str == "":
+            return
+        self.__message_send_handler.send(messages=[
+            Message(type="text",
+                    content=bytes(message_content_str, encoding="utf-8"),
+                    sender=None)
+        ])
+        self.__text_edit.clear()
+        self.__text_edit.setFocus()
 
-    @property
+    def text_edit(self):
+        return self.__text_edit
+
     def toolbar(self):
         return self.__toolbar
 
-    @property
     def message_sender(self):
         return self.__message_send_handler
-
-
-if __name__ == '__main__':
-
-    app = QApplication(sys.argv)
-    ex = ChatInput()
-    fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
-    fileSvg.setMaximumSize(QSize(20, 20))
-    ex.getToolbar().addAction()
-    sys.exit(app.exec_())
