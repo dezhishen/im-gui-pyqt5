@@ -12,16 +12,13 @@ class ImAppMainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         self.setStyleSheet("QMainWindow#MainWindow{"
-                           #"background:white"
+                           # "background:white"
                            "}"
                            "QToolBar#toolbarPlugins{"
                            "background:silver"
-                           "}"
-                           )
-
+                           "}")
         '''
             todo: can be refactor as plugins
-            
             当toolbar 添加一项 action 时 在 stackedwidget中插入一个插件 widget
         '''
         '''

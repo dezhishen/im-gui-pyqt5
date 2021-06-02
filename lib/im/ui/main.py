@@ -1,13 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
 """
 主窗口
 """
 
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
-
 
 if __name__ == '__main__':
 
