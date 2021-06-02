@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+from lib.im.im_instance.MessageSenderInstance import MessageSenderInstance
 import sys
 from PyQt5 import QtSvg
 from PyQt5.QtCore import QSize
@@ -8,15 +9,15 @@ from PyQt5.QtWidgets import (QTextEdit, QToolBar, QWidget, QPushButton,
                              QHBoxLayout, QVBoxLayout, QApplication)
 
 
-class ChatRecordBrowser(QWidget):
+class ChatInput(QWidget):
 
-    _toolbar = None
-    _textEdit = None
-    _message_send_handler = None
+    __toolbar = None
+    __textEdit = None
+    __message_send_handler = None
 
-    def __init__(self, message_send_handler):
+    def __init__(self, message_send_handler: MessageSenderInstance):
         super().__init__()
-        self._message_send_handler = message_send_handler
+        self.__message_send_handler = message_send_handler
         self.initUI()
 
     def initUI(self):
@@ -25,7 +26,7 @@ class ChatRecordBrowser(QWidget):
         imageSvg = QtSvg.QSvgWidget("./assets/icons/tupian.svg")
         imageSvg.setMaximumSize(QSize(20, 20))
         toolbar.addWidget(imageSvg)
-        self._toolbar = toolbar
+        self.__toolbar = toolbar
         # 按钮组
         closeButton = QPushButton("关闭")
         sendButton = QPushButton("发送")
@@ -37,7 +38,7 @@ class ChatRecordBrowser(QWidget):
         mainBox.addWidget(toolbar)
         textEdit = QTextEdit()
         textEdit.setAcceptRichText(False)
-        self._textEdit = textEdit
+        self.__textEdit = textEdit
         mainBox.addWidget(textEdit)
         # mainBox.addStretch(1)
         mainBox.addLayout(bottonsHbox)
@@ -46,18 +47,24 @@ class ChatRecordBrowser(QWidget):
         self.setWindowTitle('Buttons')
         self.show()
 
-    def getTextEdit(self):
-        return self._textEdit
+    @property
+    def textEdit(self):
+        return self.__textEdit
 
-    def getToolbar(self):
-        return self._toolbar
+    @property
+    def toolbar(self):
+        return self.__toolbar
+
+    @property
+    def message_sender(self):
+        return self.__message_send_handler
 
 
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
-    ex = ChatRecordBrowser()
+    ex = ChatInput()
     fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
     fileSvg.setMaximumSize(QSize(20, 20))
-    ex.getToolbar().addWidget(fileSvg)
+    ex.getToolbar().addAction()
     sys.exit(app.exec_())
