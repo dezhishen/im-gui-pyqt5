@@ -1,5 +1,6 @@
 import sys
 from PyQt5.QtCore import QSize
+from tools.FileUtil import FileUtil
 from im_ui.ChatInput import ChatInput
 from PyQt5.QtWidgets import QApplication
 from im_instance.Entity import Message
@@ -15,7 +16,8 @@ class TestSender(MessageSenderInstance):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    app.setStyleSheet("QToolBar{spacing:40px;}")
+    styleFile = FileUtil.readQss("./assets/style/global.qss")
+    app.setStyleSheet(styleFile)
     # 输入框初始化
     chat_input = ChatInput(message_send_handler=TestSender())
     # 自定义 toolbar的按钮
