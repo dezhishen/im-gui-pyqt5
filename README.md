@@ -43,5 +43,9 @@
 
 如有包变动,请开发人员执行`pip freeze > requirements.txt`保证包的依赖不出现问题
 
+## 启动项目
+运行`main.py`中的`__main__`方法
+
+
 ## 注意事项
 本项目版本管理较为粗放,仅保证[`releases`](https://github.com/dezhiShen/im-gui-pyqt5/releases)可用
