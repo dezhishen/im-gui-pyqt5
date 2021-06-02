@@ -1,8 +1,8 @@
-QToolBar{
+#chat-input QToolBar{
     spacing: 8px;
 }
 
-QToolBar QSvgWidget{
+#chat-input QToolBar QSvgWidget{
     max-width: 20px;
     max-height: 20px;
 }

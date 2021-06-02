@@ -23,6 +23,8 @@ class ChatInput(QWidget):
         self.initUI()
 
     def initUI(self):
+        # 自身属性设置
+        self.setObjectName("chat-input")
         # toolbar
         toolbar = QToolBar()
         imageSvg = QtSvg.QSvgWidget("./assets/icons/tupian.svg")
@@ -36,14 +38,16 @@ class ChatInput(QWidget):
         bottonsHbox.addStretch(1)
         bottonsHbox.addWidget(closeButton)
         bottonsHbox.addWidget(sendButton)
-        mainBox = QVBoxLayout()
-        mainBox.addWidget(toolbar)
+        # 输入文本框
         text_edit = QTextEdit()
         text_edit.setAcceptRichText(False)
         self.__text_edit = text_edit
+        # 整体布局
+        mainBox = QVBoxLayout()
+        mainBox.addWidget(toolbar)
         mainBox.addWidget(text_edit)
-        # mainBox.addStretch(1)
         mainBox.addLayout(bottonsHbox)
+        # 设置布局
         self.setLayout(mainBox)
 
     def send_button_click(self):
