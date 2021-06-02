@@ -1,4 +1,5 @@
 import sys
+from typing import List
 from PyQt5.QtCore import QSize
 from tools.FileUtil import FileUtil
 from im_ui.ChatInput import ChatInput
@@ -9,7 +10,7 @@ from PyQt5 import QtSvg
 
 
 class TestSender(MessageSenderInstance):
-    def send(self, messages: list[Message]):
+    def send(self, messages: List[Message]):
         for msg in messages:
             print(str(msg.content, encoding="utf8"))
 
