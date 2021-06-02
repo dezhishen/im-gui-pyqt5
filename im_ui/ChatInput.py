@@ -20,12 +20,13 @@ class ChatTextEdit(QTextEdit):
         self.parent = parent
 
     def keyPressEvent(self, event):
-        QtWidgets.QTextEdit.keyPressEvent(self, event)
         if event.key() == Qt.Key_Return:
             if int(QApplication.keyboardModifiers()) == 0:
                 self.parent.send_msg()
             elif QApplication.keyboardModifiers() == Qt.ControlModifier:
                 self.textCursor().insertText("\n")
+        else:
+            QtWidgets.QTextEdit.keyPressEvent(self, event)
 
 
 class ChatInput(QWidget):
