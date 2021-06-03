@@ -30,7 +30,6 @@ class ChatTextEdit(QTextEdit):
 
 
 class ChatInput(QWidget):
-
     __toolbar = None
     __text_edit = None
     __message_send_handler = None

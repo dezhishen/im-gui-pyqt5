@@ -1,3 +1,4 @@
+from PyQt5 import QtCore
 from im_instance.Entity import Message, MessageElement
 import typing
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QScrollArea, QToolBar,\
@@ -16,6 +17,7 @@ class ChatBox(QWidget):
     消息展示框上方的toolbar
     """
     __toolbar = None
+    __message_signal = QtCore.pyqtSignal(Message)
 
     # """
     # 消息监听接口
@@ -27,6 +29,8 @@ class ChatBox(QWidget):
         self.__init_gui()
 
     def __init_gui(self):
+        # 消息信号
+        self.__message_signal.connect(self.process_msg)
         self.setObjectName("chat-box")
         # toolbar
         self.__toolbar = QToolBar(self)
@@ -47,25 +51,18 @@ class ChatBox(QWidget):
         return self.__toolbar
 
     def receiver_msg(self, message: Message):
-        print("0")
+        self.__message_signal.emit(message)
+
+    def process_msg(self, message: Message):
         mes_item_widget = self.render_message(message)
-        print("0-")
-        print("add")
         self.chat_box().layout().addWidget(mes_item_widget)
-        print("add-")
 
     def render_message(self, message: Message):
         la = QHBoxLayout()
-        print("1")
         la.addWidget(QLabel(text=message.sender().get_name_for_show()))
-        print("1-")
         for e in message.elements():
-            print("2")
             la.addWidget(self.render_item(e))
-            print("2-")
-        print("3")
         result = QWidget()
-        print("3-")
         result.setLayout(la)
         return result
 

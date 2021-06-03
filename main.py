@@ -1,6 +1,7 @@
 from im_ui.ChatBox import ChatBox
 import sys
 import time
+import threading
 from typing import List
 from tools.FileUtil import FileUtil
 from im_ui.ChatInput import ChatInput
@@ -17,18 +18,20 @@ class TestSender(MessageSenderInstance):
 
 
 def send_msg():
-    time.sleep(5)
-    sender = Sender(id=1,
-                    type="pri",
-                    code="1",
-                    name="a",
-                    alias_name="别名",
-                    meta={"headerImageUrl": "test"})
-    elements = [
-        MessageElement(type="text", content=bytes("收到一条消息", encoding="utf-8"))
-    ]
-    msg = Message(sender=sender, elements=elements)
-    chat_box.receiver_msg(message=msg)
+    while True:
+        time.sleep(5)
+        sender = Sender(id=1,
+                        type="pri",
+                        code="1",
+                        name="a",
+                        alias_name="别名",
+                        meta={"headerImageUrl": "test"})
+        elements = [
+            MessageElement(type="text",
+                           content=bytes("收到一条消息", encoding="utf-8"))
+        ]
+        msg = Message(sender=sender, elements=elements)
+        chat_box.receiver_msg(message=msg)
 
 
 if __name__ == '__main__':
@@ -54,5 +57,6 @@ if __name__ == '__main__':
     mainWindow.setLayout(mainWindowLayout)
     mainWindow.setWindowTitle("示例")
     mainWindow.show()
-    send_msg()
+    t1 = threading.Thread(target=send_msg)
+    t1.start()
     sys.exit(app.exec_())
