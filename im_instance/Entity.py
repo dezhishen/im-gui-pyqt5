@@ -42,6 +42,7 @@ class Sender(object):
 class Message(object):
     __type = None
     __content = None
+    __sender = None
 
     def __init__(self, type: str, content: bytes, sender: Sender):
         super().__init__()
