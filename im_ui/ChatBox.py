@@ -1,6 +1,7 @@
-from im_instance.Entity import Message
+from im_instance.Entity import Message, MessageElement
 import typing
-from PyQt5.QtWidgets import QTextBrowser, QToolBar, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QScrollArea, QToolBar,\
+     QVBoxLayout, QWidget
 """
 聊天框
 """
@@ -10,7 +11,7 @@ class ChatBox(QWidget):
     """
     消息展示框
     """
-    __text_browser = None
+    __chat_box = None
     """
     消息展示框上方的toolbar
     """
@@ -31,22 +32,44 @@ class ChatBox(QWidget):
         self.__toolbar = QToolBar(self)
 
         # 消息框
-        self.__text_browser = QTextBrowser(self)
+        self.__chat_box = QScrollArea(self)
+        self.__chat_box.setLayout(QVBoxLayout(self))
         # 主布局
         mainBox = QVBoxLayout()
         mainBox.addWidget(self.__toolbar)
-        mainBox.addWidget(self.__text_browser)
+        mainBox.addWidget(self.__chat_box)
         self.setLayout(mainBox)
 
-    def text_browser(self):
-        return self.__text_browser
+    def chat_box(self):
+        return self.__chat_box
 
     def toolbar(self):
         return self.__toolbar
 
     def receiver_msg(self, message: Message):
-        # todo 渲染和处理textbrowser
-        if message.type == "text":
-            self.__text_browser.append(str(message.content, encoding="utf-8"))
-        self.__text_browser.moveCursor(self.__text_browser.textCursor().End)
-        pass
+        print("0")
+        mes_item_widget = self.render_message(message)
+        print("0-")
+        print("add")
+        self.chat_box().layout().addWidget(mes_item_widget)
+        print("add-")
+
+    def render_message(self, message: Message):
+        la = QHBoxLayout()
+        print("1")
+        la.addWidget(QLabel(text=message.sender().get_name_for_show()))
+        print("1-")
+        for e in message.elements():
+            print("2")
+            la.addWidget(self.render_item(e))
+            print("2-")
+        print("3")
+        result = QWidget()
+        print("3-")
+        result.setLayout(la)
+        return result
+
+    def render_item(self, element: MessageElement):
+        if element.type() == "text":
+            return QLabel(text=str(element.content(), encoding="utf-8"))
+        return
