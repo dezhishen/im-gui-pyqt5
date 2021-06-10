@@ -1,3 +1,4 @@
+from im_ui.ChatRoomList import ChatRoomList
 from im_ui.ChatBox import ChatBox
 import sys
 import time
@@ -5,7 +6,7 @@ import threading
 from typing import List
 from tools.FileUtil import FileUtil
 from im_ui.ChatInput import ChatInput
-from PyQt5.QtWidgets import QApplication, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QApplication, QHBoxLayout, QVBoxLayout, QWidget
 from im_instance.Entity import Message, MessageElement, Sender
 from im_instance.MessageSenderInstance import MessageSenderInstance
 from PyQt5 import QtSvg
@@ -41,6 +42,7 @@ if __name__ == '__main__':
 
     mainWindow = QWidget()
 
+    chat_room = ChatRoomList()
     # 聊天框初始化
     chat_box = ChatBox()
 
@@ -51,10 +53,13 @@ if __name__ == '__main__':
     chat_input.toolbar().addWidget(fileSvg)
     # 展示
     # 主窗口布局
-    mainWindowLayout = QVBoxLayout()
-    mainWindowLayout.addWidget(chat_box)
-    mainWindowLayout.addWidget(chat_input)
-    mainWindow.setLayout(mainWindowLayout)
+    mainLayOut = QHBoxLayout()
+    mainLayOut.addWidget(chat_room)
+    rightLayout = QVBoxLayout()
+    rightLayout.addWidget(chat_box)
+    rightLayout.addWidget(chat_input)
+    mainLayOut.addLayout(rightLayout)
+    mainWindow.setLayout(mainLayOut)
     mainWindow.setWindowTitle("示例")
     mainWindow.show()
     t1 = threading.Thread(target=send_msg)
