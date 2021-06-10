@@ -10,15 +10,15 @@ from PyQt5.QtWidgets import QHBoxLayout, QLineEdit, QScrollArea, QToolBar,\
 
 class ChatRoomList(QWidget):
 
-    __conf_toolbar = None
+    _toolbar = None
     """
     消息搜索框
     """
-    __search_input = None
+    _search_input = None
     """
     消息展示框上方的toolbar
     """
-    __rooms = None
+    _rooms = None
     """
     接收到消息的信号
     """
@@ -38,29 +38,29 @@ class ChatRoomList(QWidget):
         self.__message_signal.connect(self.process_msg)
         self.setObjectName("chat-room-list")
         # 搜索框
-        self.__search_input = QLineEdit(self)
+        self._search_input = QLineEdit(self)
         # toolbar
-        self.__rooms = QScrollArea(self)
+        self._rooms = QScrollArea(self)
 
-        self.__rooms.setLayout(QVBoxLayout(self))
+        self._rooms.setLayout(QVBoxLayout(self))
         # 主布局
         mainBox = QHBoxLayout()
-        self.__toolbar = QToolBar(self)
-        self.__toolbar.setOrientation(QtCore.Qt.Vertical)
+        self._toolbar = QToolBar(self)
+        self._toolbar.setOrientation(QtCore.Qt.Vertical)
         leftBox = QVBoxLayout()
-        leftBox.addWidget(self.__toolbar)
+        leftBox.addWidget(self._toolbar)
         mainBox.addLayout(leftBox)
         rightBox = QVBoxLayout()
-        rightBox.addWidget(self.__search_input)
-        rightBox.addWidget(self.__rooms)
+        rightBox.addWidget(self._search_input)
+        rightBox.addWidget(self._rooms)
         mainBox.addLayout(rightBox)
         self.setLayout(mainBox)
 
     def search_input(self):
-        return self.__search_input
+        return self._search_input
 
     def rooms(self):
-        return self.__rooms
+        return self._rooms
 
     def receiver_msg(self, message: Message):
         self.__message_signal.emit(message)

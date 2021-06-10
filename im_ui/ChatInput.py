@@ -30,13 +30,13 @@ class ChatTextEdit(QTextEdit):
 
 
 class ChatInput(QWidget):
-    __toolbar = None
-    __text_edit = None
-    __message_send_handler = None
+    _toolbar = None
+    _text_edit = None
+    _message_send_handler = None
 
     def __init__(self, message_send_handler: MessageSenderInstance):
         super().__init__()
-        self.__message_send_handler = message_send_handler
+        self._message_send_handler = message_send_handler
         self.initUI()
 
     def initUI(self):
@@ -46,7 +46,7 @@ class ChatInput(QWidget):
         toolbar = QToolBar()
         imageSvg = QtSvg.QSvgWidget("./assets/icons/tupian.svg")
         toolbar.addWidget(imageSvg)
-        self.__toolbar = toolbar
+        self._toolbar = toolbar
         # 按钮组
         # closeButton = QPushButton("关闭")
         sendButton = QPushButton("发送")
@@ -58,7 +58,7 @@ class ChatInput(QWidget):
         # 输入文本框
         text_edit = ChatTextEdit(self)
         text_edit.setAcceptRichText(False)
-        self.__text_edit = text_edit
+        self._text_edit = text_edit
         # 整体布局
         mainBox = QVBoxLayout()
         mainBox.addWidget(toolbar)
@@ -68,22 +68,22 @@ class ChatInput(QWidget):
         self.setLayout(mainBox)
 
     def send_msg(self):
-        message_content_str = self.__text_edit.toPlainText()
+        message_content_str = self._text_edit.toPlainText()
         if message_content_str is None or message_content_str == "":
             return
-        self.__message_send_handler.send(messages=[
+        self._message_send_handler.send(messages=[
             Message(type="text",
                     content=bytes(message_content_str, encoding="utf-8"),
                     sender=None)
         ])
-        self.__text_edit.clear()
-        self.__text_edit.setFocus()
+        self._text_edit.clear()
+        self._text_edit.setFocus()
 
     def text_edit(self):
-        return self.__text_edit
+        return self._text_edit
 
     def toolbar(self):
-        return self.__toolbar
+        return self._toolbar
 
     def message_sender(self):
-        return self.__message_send_handler
+        return self._message_send_handler

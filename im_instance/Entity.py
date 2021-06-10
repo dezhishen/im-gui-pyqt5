@@ -3,12 +3,12 @@ from typing import List
 
 
 class Sender(object):
-    __id = None
-    __type = None
-    __code = None
-    __name = None
-    __alias_name = None
-    __meta = {}
+    _id = None
+    _type = None
+    _code = None
+    _name = None
+    _alias_name = None
+    _meta = {}
 
     def __init__(self,
                  id: str,
@@ -18,29 +18,29 @@ class Sender(object):
                  alias_name: str = None,
                  meta: dict = None) -> None:
         super().__init__()
-        self.__id = id
-        self.__type = type
-        self.__code = code
-        self.__name = name
-        self.__alias_name = alias_name
-        self.__meta = meta
-        if self.__meta is None:
-            self.__meta = {}
+        self._id = id
+        self._type = type
+        self._code = code
+        self._name = name
+        self._alias_name = alias_name
+        self._meta = meta
+        if self._meta is None:
+            self._meta = {}
 
     def id(self):
-        return self.__id
+        return self._id
 
     def type(self):
-        return self.__type
+        return self._type
 
     def code(self):
-        return self.__code
+        return self._code
 
     def name(self):
-        return self.__name
+        return self._name
 
     def alias_name(self):
-        return self.__alias_name
+        return self._alias_name
 
     """
     按照顺序 alias_name,name,code,id ,获取第一个非空字段
@@ -58,58 +58,58 @@ class Sender(object):
 
     @property
     def meta(self):
-        return self.__meta
+        return self._meta
 
     def put_meta(self, key, value):
-        self.__meta[key] = value
+        self._meta[key] = value
         return self
 
 
 class MessageElement(object):
-    __type = None
-    __content = None
-    __meta = {}
+    _type = None
+    _content = None
+    _meta = {}
 
     def __init__(self, type, content, meta={}):
         super().__init__()
-        self.__type = type
-        self.__content = content
-        self.__meta = meta
-        if self.__meta is None:
-            self.__meta = {}
+        self._type = type
+        self._content = content
+        self._meta = meta
+        if self._meta is None:
+            self._meta = {}
 
     def type(self):
-        return self.__type
+        return self._type
 
     def meta(self):
-        return self.__meta
+        return self._meta
 
     def content(self):
-        return self.__content
+        return self._content
 
     def put_meta(self, key: str, value):
-        self.__meta[key] = value
+        self._meta[key] = value
         return self
 
 
 class Message(object):
-    __sender = None
-    __elements = None
-    __datetime = None
+    _sender = None
+    _elements = None
+    _datetime = None
 
     def __init__(self,
                  sender: Sender,
                  elements: List[MessageElement],
                  msg_datetime: datetime = None):
         super().__init__()
-        self.__sender = sender
-        self.__elements = elements
-        self.__datetime = msg_datetime
-        if self.__datetime is None:
-            self.__datetime = datetime.now()
+        self._sender = sender
+        self._elements = elements
+        self._datetime = msg_datetime
+        if self._datetime is None:
+            self._datetime = datetime.now()
 
     def elements(self):
-        return self.__elements
+        return self._elements
 
     def sender(self):
-        return self.__sender
+        return self._sender
