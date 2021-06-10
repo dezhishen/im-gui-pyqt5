@@ -62,7 +62,7 @@ class ChatRoomList(QWidget):
     def rooms(self):
         return self._rooms
 
-    def receiver_msg(self, message: Message):
+    def receive_msg(self, message: Message):
         self.__message_signal.emit(message)
 
     def process_msg(self, message: Message):

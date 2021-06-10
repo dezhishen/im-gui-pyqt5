@@ -1,5 +1,3 @@
-import sys
-
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 
@@ -10,8 +8,6 @@ from PyQt5 import QtSvg
 # from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import (QApplication, QTextEdit, QToolBar, QWidget,
                              QPushButton, QHBoxLayout, QVBoxLayout)
-
-sys.path.append("../")
 
 
 class ChatTextEdit(QTextEdit):

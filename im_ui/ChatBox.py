@@ -50,7 +50,7 @@ class ChatBox(QWidget):
     def toolbar(self):
         return self._toolbar
 
-    def receiver_msg(self, message: Message):
+    def receive_msg(self, message: Message):
         self._message_signal.emit(message)
 
     def process_msg(self, message: Message):
