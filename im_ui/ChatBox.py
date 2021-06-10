@@ -12,12 +12,12 @@ class ChatBox(QWidget):
     """
     消息展示框
     """
-    __chat_box = None
+    _chat_box = None
     """
     消息展示框上方的toolbar
     """
-    __toolbar = None
-    __message_signal = QtCore.pyqtSignal(Message)
+    _toolbar = None
+    _message_signal = QtCore.pyqtSignal(Message)
 
     # """
     # 消息监听接口
@@ -30,28 +30,28 @@ class ChatBox(QWidget):
 
     def __init_gui(self):
         # 消息信号
-        self.__message_signal.connect(self.process_msg)
+        self._message_signal.connect(self.process_msg)
         self.setObjectName("chat-box")
         # toolbar
-        self.__toolbar = QToolBar(self)
+        self._toolbar = QToolBar(self)
 
         # 消息框
-        self.__chat_box = QScrollArea(self)
-        self.__chat_box.setLayout(QVBoxLayout(self))
+        self._chat_box = QScrollArea(self)
+        self._chat_box.setLayout(QVBoxLayout(self))
         # 主布局
         mainBox = QVBoxLayout()
-        mainBox.addWidget(self.__toolbar)
-        mainBox.addWidget(self.__chat_box)
+        mainBox.addWidget(self._toolbar)
+        mainBox.addWidget(self._chat_box)
         self.setLayout(mainBox)
 
     def chat_box(self):
-        return self.__chat_box
+        return self._chat_box
 
     def toolbar(self):
-        return self.__toolbar
+        return self._toolbar
 
     def receiver_msg(self, message: Message):
-        self.__message_signal.emit(message)
+        self._message_signal.emit(message)
 
     def process_msg(self, message: Message):
         mes_item_widget = self.render_message(message)
