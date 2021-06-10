@@ -1,6 +1,5 @@
 from PyQt5 import QtCore
 from im_instance.Message import Message
-import typing
 from PyQt5.QtWidgets import QHBoxLayout, QLineEdit, QScrollArea, QToolBar,\
      QVBoxLayout, QWidget
 """
@@ -19,23 +18,26 @@ class ChatRoomList(QWidget):
     消息展示框上方的toolbar
     """
     _rooms = None
-    """
-    接收到消息的信号
-    """
-    __message_signal = QtCore.pyqtSignal(Message)
+
+    # 接收到消息的信号
+    __receive_message_signal = QtCore.pyqtSignal(Message)
+
+    # 发送到消息的信号
+    __send_message_signal = QtCore.pyqtSignal(Message)
 
     # """
     # 消息监听接口
     # """
     # __msg_listener = None
 
-    def __init__(self, parent: typing.Optional['QWidget'] = None):
+    def __init__(self, parent: QWidget):
         super().__init__(parent=parent)
         self.__init_gui()
 
     def __init_gui(self):
         # 消息信号
-        self.__message_signal.connect(self.process_msg)
+        self.__receive_message_signal.connect(self.after_receive_message)
+        self.__send_message_signal.connect(self.after_send_message)
         self.setObjectName("chat-room-list")
         # 搜索框
         self._search_input = QLineEdit(self)
@@ -62,9 +64,16 @@ class ChatRoomList(QWidget):
     def rooms(self):
         return self._rooms
 
-    def receive_msg(self, message: Message):
-        self.__message_signal.emit(message)
+    def receive_message(self, message: Message):
+        self.__receive_message_signal.emit(message)
 
-    def process_msg(self, message: Message):
+    def send_message(self, message: Message):
+        self.__send_message_signal.emit(message)
+
+    def after_receive_message(self, message: Message):
+        # todo 接收到消息的信号后的处理方法
+        pass
+
+    def after_send_message(self, message: Message):
         # todo 接收到消息的信号后的处理方法
         pass

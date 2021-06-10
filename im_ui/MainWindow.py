@@ -19,11 +19,11 @@ class MainWindow(QtWidgets.QWidget):
         self.__init_gui()
 
     def __init_gui(self):
-        self._chat_room = ChatRoomList()
+        self._chat_room = ChatRoomList(self)
         # 聊天框初始化
-        self._chat_box = ChatBox()
+        self._chat_box = ChatBox(self)
         # 输入框初始化
-        self._chat_input = ChatInput(self._client.message_send_instance())
+        self._chat_input = ChatInput(self)
         # 自定义 toolbar的按钮
         # fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
         # self._chat_input.toolbar().addWidget(fileSvg)
@@ -47,10 +47,16 @@ class MainWindow(QtWidgets.QWidget):
     def chat_input(self):
         return self._chat_input
 
-    def receive_msg(self, message: Message):
-        self._chat_box.receive_msg(message)
-        self._chat_room.receive_msg(message)
+    def send_message(self, message: Message):
+        print("window.send_message")
+        self._chat_box.send_message(message)
+        self._chat_room.send_message(message)
+        self._client.send_message(message)
 
-    def listen_msg(self):
-        self._client.start_listen_receive_message(
-            process_message=self.receive_msg)
+    def receive_message(self, message: Message):
+        self._chat_box.receive_message(message)
+        self._chat_room.receive_message(message)
+
+    def listen_message(self):
+        self._client.listen_receive_message(
+            process_message=self.receive_message)
