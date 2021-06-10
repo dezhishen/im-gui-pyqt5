@@ -1,8 +1,4 @@
-from datetime import datetime
-from typing import List
-
-
-class Sender(object):
+class User(object):
     _id = None
     _type = None
     _code = None
@@ -65,6 +61,16 @@ class Sender(object):
         return self
 
 
+class Receiver(User):
+    """接收人
+    """
+
+
+class Sender(User):
+    """发送人
+    """
+
+
 class MessageElement(object):
     _type = None
     _content = None
@@ -92,24 +98,13 @@ class MessageElement(object):
         return self
 
 
-class Message(object):
-    _sender = None
-    _elements = None
-    _datetime = None
+class Self(User):
+    _header_image_url = None
 
-    def __init__(self,
-                 sender: Sender,
-                 elements: List[MessageElement],
-                 msg_datetime: datetime = None):
-        super().__init__()
-        self._sender = sender
-        self._elements = elements
-        self._datetime = msg_datetime
-        if self._datetime is None:
-            self._datetime = datetime.now()
+    @property
+    def header_image_url(self):
+        return self._header_image_url
 
-    def elements(self):
-        return self._elements
-
-    def sender(self):
-        return self._sender
+    @header_image_url.setter
+    def header_image_url(self, header_image_url):
+        self._header_image_url = header_image_url

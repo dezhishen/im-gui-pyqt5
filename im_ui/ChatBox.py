@@ -1,5 +1,5 @@
 from PyQt5 import QtCore
-from im_instance.Entity import Message, MessageElement
+from im_instance.Message import Message, MessageElement
 import typing
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QScrollArea, QToolBar,\
      QVBoxLayout, QWidget

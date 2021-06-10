@@ -1,8 +1,8 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 
-from im_instance.MessageSenderInstance import MessageSenderInstance
-from im_instance.Entity import Message
+from im_instance.MessageSenderInstance import MessageSendInstance
+from im_instance.Message import Message
 
 from PyQt5 import QtSvg
 # from PyQt5.QtCore import QSize
@@ -30,7 +30,7 @@ class ChatInput(QWidget):
     _text_edit = None
     _message_send_handler = None
 
-    def __init__(self, message_send_handler: MessageSenderInstance):
+    def __init__(self, message_send_handler: MessageSendInstance):
         super().__init__()
         self._message_send_handler = message_send_handler
         self.initUI()

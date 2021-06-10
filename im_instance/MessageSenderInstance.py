@@ -1,12 +1,12 @@
 from abc import abstractmethod
 from typing import List
-from im_instance.Entity import Message
+from im_instance.Message import Message
 import sys
 
 sys.path.append("../")
 
 
-class MessageSenderInstance(object):
+class MessageSendInstance(object):
     """
     发送消息
     """

@@ -1,6 +1,6 @@
-from im_instance.Entity import Message
+from im_instance.Message import Message
 from im_ui.ChatInput import ChatInput
-from im_instance.MessageSenderInstance import MessageSenderInstance
+from im_instance.MessageSenderInstance import MessageSendInstance
 from im_ui.ChatBox import ChatBox
 from im_ui.ChatRoomList import ChatRoomList
 from PyQt5 import QtWidgets
@@ -12,8 +12,7 @@ class MainWindow(QtWidgets.QWidget):
     _chat_input = None
     _message_send_handler = None
 
-    def __init__(self, title: str,
-                 message_send_handler: MessageSenderInstance):
+    def __init__(self, title: str, message_send_handler: MessageSendInstance):
         super().__init__()
         self._message_send_handler = message_send_handler
         self._title = title

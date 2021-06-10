@@ -1,3 +1,4 @@
+from im_instance.User import Receiver
 from im_ui.MainWindow import MainWindow
 import sys
 import time
@@ -5,12 +6,12 @@ import threading
 from typing import List
 from tools.FileUtil import FileUtil
 from PyQt5.QtWidgets import QApplication
-from im_instance.Entity import Message, MessageElement, Sender
-from im_instance.MessageSenderInstance import MessageSenderInstance
+from im_instance.Message import Message, MessageElement, Sender
+from im_instance.MessageSenderInstance import MessageSendInstance
 from PyQt5 import QtSvg
 
 
-class TestSender(MessageSenderInstance):
+class TestSender(MessageSendInstance):
     def send(self, messages: List[Message]):
         for msg in messages:
             print(str(msg.content, encoding="utf8"))
@@ -25,11 +26,17 @@ def send_msg():
                         name="a",
                         alias_name="别名",
                         meta={"headerImageUrl": "test"})
+        receiver = Receiver(id=1,
+                            type="pri",
+                            code="1",
+                            name="a",
+                            alias_name="别名",
+                            meta={"headerImageUrl": "test"})
         elements = [
             MessageElement(type="text",
                            content=bytes("收到一条消息", encoding="utf-8"))
         ]
-        msg = Message(sender=sender, elements=elements)
+        msg = Message(sender=sender, receiver=receiver, elements=elements)
         mainWindow.receive_msg(message=msg)
 
 
