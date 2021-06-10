@@ -1,8 +1,9 @@
+from abc import abstractmethod
 from im_instance.MessageSenderInstance import MessageSendInstance
 from im_instance.Message import Message
 
 
-class Clent(object):
+class Client(object):
     """客户端
     """
 
@@ -26,3 +27,10 @@ class Clent(object):
             message (Message): 消息对象
         """
         self._message_send_instance.send(message)
+
+    def message_send_instance(self) -> MessageSendInstance:
+        return self._message_send_instance
+
+    @abstractmethod
+    def start_receive_message(self):
+        pass

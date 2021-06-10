@@ -1,8 +1,12 @@
+from typing import Dict
+
+
 class User(object):
     _id = None
     _type = None
     _code = None
     _name = None
+    _header_image_url = None
     _alias_name = None
     _meta = {}
 
@@ -12,6 +16,7 @@ class User(object):
                  code: str,
                  name: str,
                  alias_name: str = None,
+                 header_image_url: str = None,
                  meta: dict = None) -> None:
         super().__init__()
         self._id = id
@@ -20,45 +25,64 @@ class User(object):
         self._name = name
         self._alias_name = alias_name
         self._meta = meta
+        self._header_image_url = header_image_url
         if self._meta is None:
             self._meta = {}
 
+    @property
     def id(self):
         return self._id
 
+    @property
     def type(self):
         return self._type
 
+    @property
     def code(self):
         return self._code
 
-    def name(self):
+    @property
+    def name(self) -> str:
         return self._name
 
-    def alias_name(self):
-        return self._alias_name
-
-    """
-    按照顺序 alias_name,name,code,id ,获取第一个非空字段
-    """
-
-    def get_name_for_show(self):
-        if self.alias_name() is not None and self.alias_name() != "":
-            return self.alias_name()
-        if self.name() is not None and self.name() != "":
-            return self.name()
-        if self.code() is not None and self.code() != "":
-            return self.code()
-        if self.id() is not None and self.id() != "":
-            return self.id()
+    @name.setter
+    def name(self, name):
+        self._name = name
 
     @property
-    def meta(self):
+    def alias_name(self) -> str:
+        return self._alias_name
+
+    @alias_name.setter
+    def alias_name(self, alias_name):
+        self._alias_name = alias_name
+
+    @property
+    def meta(self) -> Dict:
         return self._meta
 
     def put_meta(self, key, value):
         self._meta[key] = value
         return self
+
+    @property
+    def header_image_url(self) -> str:
+        return self._header_image_url
+
+    @header_image_url.setter
+    def header_image_url(self, header_image_url):
+        self._header_image_url = header_image_url
+
+    def get_name_for_show(self):
+        """按照顺序 alias_name,name,code,id ,获取第一个非空字段
+        """
+        if self._alias_name is not None and self._alias_name != "":
+            return self._alias_name
+        if self._name is not None and self._name != "":
+            return self._name
+        if self._code is not None and self._code != "":
+            return self._code
+        return self._id
 
 
 class Receiver(User):
@@ -71,40 +95,6 @@ class Sender(User):
     """
 
 
-class MessageElement(object):
-    _type = None
-    _content = None
-    _meta = {}
-
-    def __init__(self, type, content, meta={}):
-        super().__init__()
-        self._type = type
-        self._content = content
-        self._meta = meta
-        if self._meta is None:
-            self._meta = {}
-
-    def type(self):
-        return self._type
-
-    def meta(self):
-        return self._meta
-
-    def content(self):
-        return self._content
-
-    def put_meta(self, key: str, value):
-        self._meta[key] = value
-        return self
-
-
 class Self(User):
-    _header_image_url = None
-
-    @property
-    def header_image_url(self):
-        return self._header_image_url
-
-    @header_image_url.setter
-    def header_image_url(self, header_image_url):
-        self._header_image_url = header_image_url
+    """自身信息
+    """

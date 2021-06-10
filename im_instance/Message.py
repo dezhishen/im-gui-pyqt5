@@ -1,6 +1,38 @@
 from datetime import datetime
-from im_instance.User import MessageElement, Receiver, Self, Sender
-from typing import List
+from im_instance.User import Receiver, Self, Sender
+from typing import Dict, List
+
+
+class MessageElement(object):
+    """消息列表
+    """
+    _type = None
+    _content = None
+    _meta = {}
+
+    def __init__(self, type, content, meta={}):
+        super().__init__()
+        self._type = type
+        self._content = content
+        self._meta = meta
+        if self._meta is None:
+            self._meta = {}
+
+    def type(self) -> str:
+        return self._type
+
+    def meta(self) -> Dict:
+        return self._meta
+
+    def content(self) -> bytes:
+        return self._content
+
+    def put_meta(self, key: str, value):
+        self._meta[key] = value
+        return self
+
+    def get_meta(self, key: str):
+        return self._meta.get(key)
 
 
 class Message(object):
@@ -22,11 +54,11 @@ class Message(object):
         if self._datetime is None:
             self._datetime = datetime.now()
 
-    def elements(self):
+    def elements(self) -> List[MessageElement]:
         return self._elements
 
-    def sender(self):
+    def sender(self) -> Sender:
         return self._sender
 
-    def receiver(self):
+    def receiver(self) -> Receiver:
         return self._receiver

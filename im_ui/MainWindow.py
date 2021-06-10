@@ -1,6 +1,6 @@
+from im_instance.Client import Client
 from im_instance.Message import Message
 from im_ui.ChatInput import ChatInput
-from im_instance.MessageSenderInstance import MessageSendInstance
 from im_ui.ChatBox import ChatBox
 from im_ui.ChatRoomList import ChatRoomList
 from PyQt5 import QtWidgets
@@ -10,11 +10,11 @@ class MainWindow(QtWidgets.QWidget):
     _chat_box = None
     _chat_room = None
     _chat_input = None
-    _message_send_handler = None
+    _client = None
 
-    def __init__(self, title: str, message_send_handler: MessageSendInstance):
+    def __init__(self, title: str, client: Client):
         super().__init__()
-        self._message_send_handler = message_send_handler
+        self._client = client
         self._title = title
         self.__init_gui()
 
@@ -23,7 +23,7 @@ class MainWindow(QtWidgets.QWidget):
         # 聊天框初始化
         self._chat_box = ChatBox()
         # 输入框初始化
-        self._chat_input = ChatInput(self._message_send_handler)
+        self._chat_input = ChatInput(self._client.message_send_instance())
         # 自定义 toolbar的按钮
         # fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
         # self._chat_input.toolbar().addWidget(fileSvg)

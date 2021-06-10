@@ -1,4 +1,5 @@
-from im_instance.User import Receiver
+from im_instance.Client import Client
+from im_instance.User import Receiver, Sender
 from im_ui.MainWindow import MainWindow
 import sys
 import time
@@ -6,7 +7,7 @@ import threading
 from typing import List
 from tools.FileUtil import FileUtil
 from PyQt5.QtWidgets import QApplication
-from im_instance.Message import Message, MessageElement, Sender
+from im_instance.Message import Message, MessageElement
 from im_instance.MessageSenderInstance import MessageSendInstance
 from PyQt5 import QtSvg
 
@@ -15,6 +16,11 @@ class TestSender(MessageSendInstance):
     def send(self, messages: List[Message]):
         for msg in messages:
             print(str(msg.content, encoding="utf8"))
+
+
+class TestClient(Client):
+    def start_receive_message(self):
+        pass
 
 
 def send_msg():
@@ -44,7 +50,8 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     styleFile = FileUtil.readQss("./assets/style/global.qss")
     app.setStyleSheet(styleFile)
-    mainWindow = MainWindow(title="测试", message_send_handler=TestSender)
+    client = TestClient(message_send_instance=TestSender)
+    mainWindow = MainWindow(title="测试", client=client)
     # 自定义 toolbar的按钮
     fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
     mainWindow.chat_input().toolbar().addWidget(fileSvg)
