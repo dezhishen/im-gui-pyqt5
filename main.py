@@ -1,10 +1,11 @@
+import typing
 from im_instance.Client import Client
 from im_instance.User import Receiver, Sender
 from im_ui.MainWindow import MainWindow
 import sys
 import time
 import threading
-from typing import List
+from typing import Callable, List
 from tools.FileUtil import FileUtil
 from PyQt5.QtWidgets import QApplication
 from im_instance.Message import Message, MessageElement
@@ -19,11 +20,27 @@ class TestSender(MessageSendInstance):
 
 
 class TestClient(Client):
-    def start_receive_message(self):
-        pass
+    def listen_receive_message(self,
+                               process_message: typing.Callable[[Message],
+                                                                None]):
+        """监听方法
+
+        Args:
+            callback (typing.Callable[[Message], ]): 回调函数,方法内部应该回调该方法,处理消息的接收
+        """
+        t1 = threading.Thread(target=send_msg, args=[process_message])
+        t1.start()
 
 
-def send_msg():
+class Listen(object):
+    _process_message = None
+
+    def __init__(self, process_message: Callable[[Message], None]) -> None:
+        super().__init__()
+        self._process_message = process_message
+
+
+def send_msg(process_message):
     while True:
         time.sleep(5)
         sender = Sender(id=1,
@@ -43,7 +60,7 @@ def send_msg():
                            content=bytes("收到一条消息", encoding="utf-8"))
         ]
         msg = Message(sender=sender, receiver=receiver, elements=elements)
-        mainWindow.receive_msg(message=msg)
+        process_message(message=msg)
 
 
 if __name__ == '__main__':
@@ -56,6 +73,5 @@ if __name__ == '__main__':
     fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
     mainWindow.chat_input().toolbar().addWidget(fileSvg)
     mainWindow.show()
-    t1 = threading.Thread(target=send_msg)
-    t1.start()
+    mainWindow.listen_msg()
     sys.exit(app.exec_())

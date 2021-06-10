@@ -50,3 +50,7 @@ class MainWindow(QtWidgets.QWidget):
     def receive_msg(self, message: Message):
         self._chat_box.receive_msg(message)
         self._chat_room.receive_msg(message)
+
+    def listen_msg(self):
+        self._client.start_listen_receive_message(
+            process_message=self.receive_msg)
