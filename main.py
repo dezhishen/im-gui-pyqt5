@@ -3,7 +3,7 @@ from im_instance.User import Receiver, Sender
 from im_ui.MainWindow import MainWindow
 import sys
 import time
-# import threading
+import threading
 from typing import Callable
 from tools.FileUtil import FileUtil
 from PyQt5.QtWidgets import QApplication
@@ -23,10 +23,10 @@ class TestClient(Client):
         Args:
             callback (typing.Callable[[Message], ]): 回调函数,方法内部应该回调该方法,处理消息的接收
         """
-        # t1 = threading.Thread(target=self.__listen_message,
-        #                       args=[process_message])
-        # t1.start()
-        pass
+        t1 = threading.Thread(target=self.__listen_message,
+                              args=[process_message])
+        t1.start()
+        # pass
 
     def __listen_message(self, process_message):
         while True:
