@@ -1,3 +1,4 @@
+from event.MessageSignal import MESSAGE_SIGNAL
 from remote.User import Sender
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
@@ -63,8 +64,8 @@ class ChatInput(QWidget):
                                                  content=bytes(
                                                      message_content_str,
                                                      encoding="utf-8"))
-                              ])
-        self.parent.send_message(message=the_message)
+        ])
+        MESSAGE_SIGNAL.send.emit(the_message)
         self._text_edit.clear()
         self._text_edit.setFocus()
 

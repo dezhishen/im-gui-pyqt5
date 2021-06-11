@@ -62,9 +62,11 @@ class ChatRoomList(QWidget):
         MESSAGE_SIGNAL.send.emit(message)
 
     def after_receive_message(self, message: Message):
+        print("chat-room-list:after_receive_message")
         # todo 接收到消息的信号后的处理方法
         pass
 
     def after_send_message(self, message: Message):
         # todo 接收到消息的信号后的处理方法
+        print("chat-room-list:after_send_message")
         pass
