@@ -1,5 +1,3 @@
-from event.MessageSignal import MESSAGE_SIGNAL
-from remote.Message import Message
 from gui.ChatBox import ChatBox
 from gui.ChatRoomList import ChatRoomList
 from gui.ChatInput import ChatInput
@@ -49,9 +47,8 @@ class MainWindow(QtWidgets.QWidget):
     def chat_input(self):
         return self._chat_input
 
-    def receive_message(self, message: Message):
-        MESSAGE_SIGNAL.receive.emit(message)
+    # def receive_message(self, message: Message):
+    #     MESSAGE_SIGNAL.receive.emit(message)
 
     def listen_message(self):
-        self._client.listen_receive_message(
-            process_message=self.receive_message)
+        self._client.listen_receive_message()

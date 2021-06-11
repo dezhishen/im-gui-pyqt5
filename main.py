@@ -1,10 +1,10 @@
+from event.MessageSignal import MESSAGE_SIGNAL
 from remote.Client import Client
 from remote.User import Receiver, Sender
 from gui.MainWindow import MainWindow
 import sys
 import time
 import threading
-from typing import Callable
 from tools.FileUtil import FileUtil
 from PyQt5.QtWidgets import QApplication
 from remote.Message import Message, MessageElement
@@ -16,19 +16,14 @@ class TestClient(Client):
         for element in message.elements():
             print(str(element.content(), encoding="utf8"))
 
-    def listen_receive_message(self, process_message: Callable[[Message],
-                                                               None]):
+    def listen_receive_message(self):
         """监听方法
-
-        Args:
-            callback (typing.Callable[[Message], ]): 回调函数,方法内部应该回调该方法,处理消息的接收
         """
-        t1 = threading.Thread(target=self.__listen_message,
-                              args=[process_message])
+        t1 = threading.Thread(target=self.__listen_message)
         t1.start()
         # pass
 
-    def __listen_message(self, process_message):
+    def __listen_message(self):
         while True:
             time.sleep(5)
             sender = Sender(id=1,
@@ -48,7 +43,11 @@ class TestClient(Client):
                                content=bytes("收到一条消息", encoding="utf-8"))
             ]
             msg = Message(sender=sender, receiver=receiver, elements=elements)
-            process_message(message=msg)
+            MESSAGE_SIGNAL.receive.emit(msg)
+
+
+def log_send(message: Message):
+    print("发送消息")
 
 
 if __name__ == '__main__':
@@ -60,6 +59,7 @@ if __name__ == '__main__':
     # 自定义 toolbar的按钮
     fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
     mainWindow.chat_input().toolbar().addWidget(fileSvg)
+    MESSAGE_SIGNAL.send.connect(log_send)
     mainWindow.show()
     mainWindow.listen_message()
     sys.exit(app.exec_())
