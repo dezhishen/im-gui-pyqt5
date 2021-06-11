@@ -25,7 +25,6 @@ class TestClient(Client):
 
     def __listen_message(self):
         while True:
-            time.sleep(5)
             sender = Sender(id=1,
                             type="pri",
                             code="1",
@@ -44,6 +43,7 @@ class TestClient(Client):
             ]
             msg = Message(sender=sender, receiver=receiver, elements=elements)
             MESSAGE_SIGNAL.receive.emit(msg)
+            time.sleep(5)
 
 
 def log_send(message: Message):

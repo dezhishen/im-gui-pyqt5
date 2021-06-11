@@ -51,4 +51,4 @@ class MainWindow(QtWidgets.QWidget):
     #     MESSAGE_SIGNAL.receive.emit(message)
 
     def listen_message(self):
-        self._client.listen_receive_message()
+        self._client.start_listen_receive_message()

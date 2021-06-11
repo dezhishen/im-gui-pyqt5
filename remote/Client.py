@@ -1,11 +1,11 @@
 from abc import abstractmethod
-import typing
 from remote.Message import Message
 
 
 class Client(object):
     """客户端
     """
+
     def __init__(self) -> None:
         """客户端
 
@@ -14,9 +14,8 @@ class Client(object):
         """
         super().__init__()
 
-    def start_listen_receive_message(
-            self, process_message: typing.Callable[[Message], None]):
-        self.listen_message(process_message=process_message)
+    def start_listen_receive_message(self):
+        self.listen_receive_message()
 
     @abstractmethod
     def send_message(self, message: Message):
@@ -28,8 +27,7 @@ class Client(object):
         pass
 
     @abstractmethod
-    def listen_message(self, process_message: typing.Callable[[Message],
-                                                              None]):
+    def listen_receive_message(self):
         """监听方法
 
         Args:
