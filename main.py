@@ -5,7 +5,7 @@ import sys
 import time
 import threading
 from typing import Callable
-from tools.FileUtil import FileUtil
+from Tools.FileUtil import FileUtil
 from PyQt5.QtWidgets import QApplication
 from remote.Message import Message, MessageElement
 from PyQt5 import QtSvg

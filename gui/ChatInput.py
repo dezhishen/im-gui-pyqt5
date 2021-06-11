@@ -3,7 +3,6 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 
 from remote.Message import Message, MessageElement
-
 from PyQt5 import QtSvg
 # from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import (QApplication, QTextEdit, QToolBar, QWidget,

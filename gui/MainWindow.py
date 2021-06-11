@@ -1,8 +1,8 @@
-from remote.Client import Client
-from remote.Message import Message
-from gui.ChatInput import ChatInput
 from gui.ChatBox import ChatBox
 from gui.ChatRoomList import ChatRoomList
+from gui.ChatInput import ChatInput
+from remote.Client import Client
+from remote.Message import Message
 from PyQt5 import QtWidgets
 
 

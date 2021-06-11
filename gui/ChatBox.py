@@ -1,7 +1,7 @@
-from PyQt5 import QtCore
 from remote.Message import Message, MessageElement
+from event.MessageSignal import MESSAGE_SIGNAL
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QScrollArea, QToolBar,\
-     QVBoxLayout, QWidget
+    QVBoxLayout, QWidget
 """
 聊天框
 """
@@ -16,8 +16,6 @@ class ChatBox(QWidget):
     消息展示框上方的toolbar
     """
     _toolbar = None
-    __receive_message_signal = QtCore.pyqtSignal(Message)
-    __send_message_signal = QtCore.pyqtSignal(Message)
 
     def __init__(self, parent: QWidget):
         super().__init__(parent=parent)
@@ -25,8 +23,8 @@ class ChatBox(QWidget):
 
     def __init_gui(self):
         # 消息信号
-        self.__receive_message_signal.connect(self.after_receive_message)
-        self.__send_message_signal.connect(self.after_send_message)
+        MESSAGE_SIGNAL.receive.connect(self.after_receive_message)
+        MESSAGE_SIGNAL.send.connect(self.after_send_message)
         self.setObjectName("chat-box")
         # toolbar
         self._toolbar = QToolBar(self)
@@ -47,11 +45,11 @@ class ChatBox(QWidget):
         return self._toolbar
 
     def receive_message(self, message: Message):
-        self.__receive_message_signal.emit(message)
+        MESSAGE_SIGNAL.receive.emit(message)
 
     def send_message(self, message: Message):
         print("chatbox:send_message")
-        self.__send_message_signal.emit(message)
+        MESSAGE_SIGNAL.send.emit(message)
 
     def after_receive_message(self, message: Message):
         mes_item_widget = self.render_receive_message(message)
