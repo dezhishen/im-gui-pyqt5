@@ -52,7 +52,7 @@ def log_send(message: Message):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    styleFile = FileUtil.readQss("./assets/style/global.qss")
+    styleFile = FileUtil.readQss("./assets/style/MaterialDark.qss")
     app.setStyleSheet(styleFile)
     client = TestClient()
     mainWindow = MainWindow(title="测试", client=client)
