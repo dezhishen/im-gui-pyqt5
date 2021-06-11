@@ -1,6 +1,6 @@
 from abc import abstractmethod
 import typing
-from im_instance.Message import Message
+from remote.Message import Message
 
 
 class Client(object):

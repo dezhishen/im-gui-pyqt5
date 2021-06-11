@@ -1,6 +1,6 @@
 # from abc import abstractmethod
 # from typing import List
-# from im_instance.Message import Message
+# from remote.Message import Message
 # import sys
 
 # sys.path.append("../")

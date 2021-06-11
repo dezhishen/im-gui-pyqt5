@@ -1,8 +1,8 @@
-from im_instance.User import Sender
+from remote.User import Sender
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 
-from im_instance.Message import Message, MessageElement
+from remote.Message import Message, MessageElement
 
 from PyQt5 import QtSvg
 # from PyQt5.QtCore import QSize

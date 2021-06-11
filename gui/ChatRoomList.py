@@ -1,5 +1,5 @@
 from PyQt5 import QtCore
-from im_instance.Message import Message
+from remote.Message import Message
 from PyQt5.QtWidgets import QHBoxLayout, QLineEdit, QScrollArea, QToolBar,\
      QVBoxLayout, QWidget
 """

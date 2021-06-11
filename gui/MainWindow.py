@@ -1,8 +1,8 @@
-from im_instance.Client import Client
-from im_instance.Message import Message
-from im_ui.ChatInput import ChatInput
-from im_ui.ChatBox import ChatBox
-from im_ui.ChatRoomList import ChatRoomList
+from remote.Client import Client
+from remote.Message import Message
+from gui.ChatInput import ChatInput
+from gui.ChatBox import ChatBox
+from gui.ChatRoomList import ChatRoomList
 from PyQt5 import QtWidgets
 
 

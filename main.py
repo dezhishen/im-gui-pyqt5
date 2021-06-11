@@ -1,13 +1,13 @@
-from im_instance.Client import Client
-from im_instance.User import Receiver, Sender
-from im_ui.MainWindow import MainWindow
+from remote.Client import Client
+from remote.User import Receiver, Sender
+from gui.MainWindow import MainWindow
 import sys
 import time
 import threading
 from typing import Callable
 from tools.FileUtil import FileUtil
 from PyQt5.QtWidgets import QApplication
-from im_instance.Message import Message, MessageElement
+from remote.Message import Message, MessageElement
 from PyQt5 import QtSvg
 
 
