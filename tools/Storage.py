@@ -10,7 +10,7 @@ sqlite_mutex = threading.Lock()
 db_dir = "./im.db"
 
 
-class MessageHistoryStorage:
+class _MessageHistoryStorage:
     _conn = None
 
     def __init__(self) -> None:
@@ -71,3 +71,6 @@ class MessageHistoryStorage:
             result.append(e)
         cursor.close()
         return result
+
+
+MESSAGE_HISTORY = _MessageHistoryStorage()
