@@ -1,9 +1,9 @@
 from typing import Dict
 
 
-class User(object):
+class Entity(object):
     _id = None
-    _type = None
+    # _type = None
     _code = None
     _name = None
     _header_image_url = None
@@ -12,7 +12,7 @@ class User(object):
 
     def __init__(self,
                  id: str,
-                 type: str,
+                 #  type: str,
                  code: str,
                  name: str,
                  alias_name: str = None,
@@ -20,7 +20,7 @@ class User(object):
                  meta: dict = None) -> None:
         super().__init__()
         self._id = id
-        self._type = type
+        # self._type = type
         self._code = code
         self._name = name
         self._alias_name = alias_name
@@ -30,16 +30,20 @@ class User(object):
             self._meta = {}
 
     @property
-    def id(self):
+    def id(self) -> str:
         return self._id
 
-    @property
-    def type(self):
-        return self._type
+    @id.setter
+    def id(self, id: str):
+        self._id = id
 
     @property
-    def code(self):
+    def code(self) -> str:
         return self._code
+
+    @code.setter
+    def code(self, code: str):
+        self._code = code
 
     @property
     def name(self) -> str:
@@ -58,7 +62,7 @@ class User(object):
         self._alias_name = alias_name
 
     @property
-    def meta(self) -> Dict:
+    def meta(self) -> Dict[str, object]:
         return self._meta
 
     def put_meta(self, key, value):
@@ -85,16 +89,54 @@ class User(object):
         return self._id
 
 
-class Receiver(User):
+class Receiver(Entity):
     """接收人
     """
+    _type = None
+
+    def __init__(self,
+                 id: str,
+                 type: str,
+                 code: str,
+                 name: str,
+                 alias_name: str,
+                 header_image_url: str = None,
+                 meta: dict = None) -> None:
+        super().__init__(id, code, name, alias_name=alias_name,
+                         header_image_url=header_image_url, meta=meta)
+        self._type = type
+
+    @property
+    def type(self) -> str:
+        return self._type
+
+    @type.setter
+    def type(self, type: str):
+        self._type = type
 
 
-class Sender(User):
+class Sender(Entity):
     """发送人
     """
+    _type = None
+
+    def __init__(self,
+                 id: str,
+                 type: str,
+                 code: str,
+                 name: str,
+                 alias_name: str,
+                 header_image_url: str = None,
+                 meta: dict = None) -> None:
+        super().__init__(id, code, name, alias_name=alias_name,
+                         header_image_url=header_image_url, meta=meta)
+        self._type = type
+
+    @property
+    def type(self) -> str:
+        return self._type
 
 
-class Self(User):
+class Self(Entity):
     """自身信息
     """

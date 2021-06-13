@@ -1,5 +1,5 @@
 from event.MessageSignal import MESSAGE_SIGNAL
-from remote.User import Sender
+from remote.Entity import Receiver, Sender
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 
@@ -17,9 +17,9 @@ class ChatInput(QWidget):
     def __init__(self, parent: QWidget):
         super().__init__()
         self.parent = parent
-        self.initUI()
+        self._init_gui()
 
-    def initUI(self):
+    def _init_gui(self):
         # 自身属性设置
         self.setObjectName("chat-input")
         # toolbar
@@ -47,31 +47,43 @@ class ChatInput(QWidget):
         self.setLayout(mainBox)
 
     def send_message(self):
-        print("chat-input:send_message")
         message_content_str = self._text_edit.toPlainText()
         if message_content_str is None or message_content_str == "":
             return
-        the_message = Message(sender=Sender(id=1,
-                                            type="pri",
-                                            code="1",
-                                            name="a",
-                                            alias_name="我自己",
-                                            header_image_url="test",
-                                            meta={"foo": "bar"}),
-                              receiver=None,
-                              elements=[
-                                  MessageElement(type="text",
-                                                 content=bytes(
-                                                     message_content_str,
-                                                     encoding="utf-8"))
-        ])
+        the_message = Message(
+            sender=Sender(
+                id=1,
+                type="pri",
+                code="1",
+                name="a",
+                alias_name="我自己",
+                header_image_url="test",
+                meta={"foo": "bar"}
+            ),
+            receiver=Receiver(
+                id=1,
+                type="pri",
+                code="1",
+                name="a",
+                alias_name="我自己",
+                header_image_url="test",
+                meta={"foo": "bar"}
+            ),
+            elements=[
+                MessageElement(type="text",
+                               content=bytes(
+                                   message_content_str,
+                                   encoding="utf-8"))
+            ])
         MESSAGE_SIGNAL.send.emit(the_message)
         self._text_edit.clear()
         self._text_edit.setFocus()
 
+    @property
     def text_edit(self):
         return self._text_edit
 
+    @property
     def toolbar(self):
         return self._toolbar
 

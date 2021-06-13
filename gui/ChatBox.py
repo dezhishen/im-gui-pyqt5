@@ -2,9 +2,6 @@ from remote.Message import Message, MessageElement
 from event.MessageSignal import MESSAGE_SIGNAL
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QListWidget, QToolBar,\
     QVBoxLayout, QWidget
-"""
-聊天框
-"""
 
 
 class ChatBox(QWidget):
@@ -39,30 +36,29 @@ class ChatBox(QWidget):
         mainBox.addWidget(self._chat_box)
         self.setLayout(mainBox)
 
+    @property
     def chat_box(self):
         return self._chat_box
 
+    @property
     def toolbar(self):
         return self._toolbar
 
     def send_message(self, message: Message):
-        print("chat-box:send_message")
         MESSAGE_SIGNAL.send.emit(message)
 
     def after_receive_message(self, message: Message):
-        print("chat-box:after_receive_message")
         mes_item_widget = self.render_receive_message(message)
-        self.chat_box().layout().addWidget(mes_item_widget)
+        self.chat_box.layout().addWidget(mes_item_widget)
 
     def after_send_message(self, message: Message):
-        print("chat-box:after_send_message")
         mes_item_widget = self.render_send_message(message)
-        self.chat_box().layout().addWidget(mes_item_widget)
+        self.chat_box.layout().addWidget(mes_item_widget)
 
     def render_receive_message(self, message: Message):
         la = QHBoxLayout()
-        la.addWidget(QLabel(text=message.sender().get_name_for_show()))
-        for e in message.elements():
+        la.addWidget(QLabel(text=message.sender.get_name_for_show()))
+        for e in message.elements:
             la.addWidget(self.render_item(e))
         result = QWidget()
         result.setLayout(la)
@@ -70,14 +66,14 @@ class ChatBox(QWidget):
 
     def render_send_message(self, message: Message):
         la = QHBoxLayout()
-        la.addWidget(QLabel(text=message.sender().get_name_for_show()))
-        for e in message.elements():
+        la.addWidget(QLabel(text=message.sender.get_name_for_show()))
+        for e in message.elements:
             la.addWidget(self.render_item(e))
         result = QWidget()
         result.setLayout(la)
         return result
 
     def render_item(self, element: MessageElement):
-        if element.type() == "text":
-            return QLabel(text=str(element.content(), encoding="utf-8"))
+        if element.type == "text":
+            return QLabel(text=str(element.content, encoding="utf-8"))
         return

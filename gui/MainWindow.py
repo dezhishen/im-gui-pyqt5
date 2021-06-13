@@ -38,12 +38,15 @@ class MainWindow(QtWidgets.QWidget):
         self.setLayout(mainLayOut)
         self.setWindowTitle(self._title)
 
+    @property
     def chat_box(self):
         return self._chat_box
 
+    @property
     def chat_room(self):
         return self._chat_room
 
+    @property
     def chat_input(self):
         return self._chat_input
 

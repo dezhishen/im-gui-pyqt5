@@ -1,6 +1,6 @@
 from event.MessageSignal import MESSAGE_SIGNAL
 from remote.Client import Client
-from remote.User import Receiver, Sender
+from remote.Entity import Receiver, Sender
 from gui.MainWindow import MainWindow
 import sys
 import time
@@ -9,12 +9,14 @@ from tools.FileUtil import FileUtil
 from PyQt5.QtWidgets import QApplication
 from remote.Message import Message, MessageElement
 from PyQt5 import QtSvg
+import logging
+from event import LoggingFunc
 
 
 class TestClient(Client):
     def send_message(self, message: Message):
         for element in message.elements():
-            print(str(element.content(), encoding="utf8"))
+            print(str(element.content, encoding="utf8"))
 
     def listen_receive_message(self):
         """监听方法
@@ -51,6 +53,12 @@ def log_send(message: Message):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(
+        level=logging.DEBUG,
+        filename=r'./logs/message.log',
+        format="%(asctime)s %(name)s %(levelname)s %(message)s",
+        datefmt='%Y-%m-%d  %H:%M:%S %a'
+    )
     app = QApplication(sys.argv)
     styleFile = FileUtil.readQss("./assets/style/global.qss")
     app.setStyleSheet(styleFile)
@@ -58,8 +66,9 @@ if __name__ == '__main__':
     mainWindow = MainWindow(title="测试", client=client)
     # 自定义 toolbar的按钮
     fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
-    mainWindow.chat_input().toolbar().addWidget(fileSvg)
+    mainWindow.chat_input.toolbar.addWidget(fileSvg)
     MESSAGE_SIGNAL.send.connect(log_send)
+    LoggingFunc.connect_log()
     mainWindow.show()
     mainWindow.listen_message()
     sys.exit(app.exec_())
