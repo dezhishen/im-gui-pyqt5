@@ -73,4 +73,4 @@ class _MessageHistoryStorage:
         return result
 
 
-MESSAGE_HISTORY = _MessageHistoryStorage()
+MESSAGE_HISTORY_STORAGE = _MessageHistoryStorage()
