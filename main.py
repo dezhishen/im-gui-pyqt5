@@ -11,6 +11,12 @@ from remote.Message import Message, MessageElement
 from PyQt5 import QtSvg
 import logging
 from event import LoggingFunc
+import alembic.config
+alembicArgs = [
+    '--raiseerr',
+    'upgrade', 'head',
+]
+alembic.config.main(argv=alembicArgs)
 
 
 class TestClient(Client):
