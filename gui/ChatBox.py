@@ -1,6 +1,6 @@
 from remote.Message import Message, MessageElement
 from event.MessageSignal import MESSAGE_SIGNAL
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QScrollArea, QToolBar,\
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QListWidget, QToolBar,\
     QVBoxLayout, QWidget
 """
 聊天框
@@ -30,7 +30,8 @@ class ChatBox(QWidget):
         self._toolbar = QToolBar(self)
 
         # 消息框
-        self._chat_box = QScrollArea(self)
+        self._chat_box = QListWidget(self)
+        self._chat_box.setObjectName("chat-box")
         self._chat_box.setLayout(QVBoxLayout(self))
         # 主布局
         mainBox = QVBoxLayout()

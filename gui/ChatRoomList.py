@@ -1,7 +1,7 @@
 from PyQt5 import QtCore
 from event.MessageSignal import MESSAGE_SIGNAL
 from remote.Message import Message
-from PyQt5.QtWidgets import QHBoxLayout, QLineEdit, QScrollArea, QToolBar,\
+from PyQt5.QtWidgets import QHBoxLayout, QLineEdit, QListWidget, QToolBar,\
     QVBoxLayout, QWidget
 
 
@@ -33,7 +33,7 @@ class ChatRoomList(QWidget):
         # 搜索框
         self._search_input = QLineEdit(self)
         # toolbar
-        self._rooms = QScrollArea(self)
+        self._rooms = QListWidget(self)
 
         self._rooms.setLayout(QVBoxLayout(self))
         # 主布局
