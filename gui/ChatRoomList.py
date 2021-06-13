@@ -58,10 +58,12 @@ class ChatRoomList(QWidget):
         return self._rooms
 
     def receive_message(self, message: Message):
-        MESSAGE_SIGNAL.receive.emit(message)
+        # MESSAGE_SIGNAL.receive.emit(message)
+        pass
 
     def send_message(self, message: Message):
-        MESSAGE_SIGNAL.after_send.emit(message)
+        # MESSAGE_SIGNAL.after_send.emit(message)
+        pass
 
     def after_receive_message(self, message: Message):
         # todo 接收到消息的信号后的处理方法

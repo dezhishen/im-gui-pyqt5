@@ -1,4 +1,6 @@
 from abc import abstractmethod
+from model.Base import MessageHistory, MessageHistoryElement
+from tools.Storage import MESSAGE_HISTORY_STORAGE
 from event.FriendsGroupsSignal import FRIENDS_GROUP_SIGNAL
 from event.MessageSignal import MESSAGE_SIGNAL
 from event.LoginSignal import LOGIN_SIGNAL
@@ -27,6 +29,25 @@ class Client(object):
         # 好友列表相关信号绑定
         FRIENDS_GROUP_SIGNAL.do_load_friends.connect(self.do_refresh_frends)
         FRIENDS_GROUP_SIGNAL.do_load_groups.connect(self.do_refresh_groups)
+        MESSAGE_SIGNAL.receive.connect(self.storage_message)
+
+    def storage_message(self, message: Message):
+        message_history = MessageHistory()
+        message_history.id = message.id
+        message_history.message_date = message.message_date
+        message_history.receiver_id = message.receiver.id
+        message_history.receiver_type = message.receiver.type
+        message_history.sender_id = message.sender.id
+        message_history.sender_type = message.sender.type
+        message_history.elements = []
+        for v in message.elements:
+            e = MessageHistoryElement()
+            e.id = v.id
+            e.type = v.type
+            e.content = v.get_db_content()
+            message_history.elements.append(e)
+        MESSAGE_HISTORY_STORAGE.insert(message_history)
+        pass
 
     @property
     def mine(self) -> Mine:

@@ -51,6 +51,7 @@ class ChatInput(QWidget):
         if message_content_str is None or message_content_str == "":
             return
         the_message = Message(
+            id=None,
             sender=Sender(
                 id=1,
                 type="pri",
@@ -70,10 +71,12 @@ class ChatInput(QWidget):
                 meta={"foo": "bar"}
             ),
             elements=[
-                MessageElement(type="text",
-                               content=bytes(
-                                   message_content_str,
-                                   encoding="utf-8"))
+                MessageElement(
+                    id=None,
+                    type="text",
+                    content=bytes(
+                        message_content_str,
+                        encoding="utf-8"))
             ])
         MESSAGE_SIGNAL.after_send.emit(the_message)
         self._text_edit.clear()

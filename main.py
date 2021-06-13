@@ -12,11 +12,10 @@ from PyQt5 import QtSvg
 import logging
 from event import LoggingFunc
 import alembic.config
-alembicArgs = [
+alembic.config.main(argv=[
     '--raiseerr',
     'upgrade', 'head',
-]
-alembic.config.main(argv=alembicArgs)
+])
 
 
 class TestClient(Client):
@@ -49,10 +48,13 @@ class TestClient(Client):
                                 alias_name="别名",
                                 meta={"headerImageUrl": "test"})
             elements = [
-                MessageElement(type="text",
-                               content=bytes("收到一条消息", encoding="utf-8"))
+                MessageElement(
+                    id=None,
+                    type="text",
+                    content=bytes("收到一条消息", encoding="utf-8"))
             ]
-            msg = Message(sender=sender, receiver=receiver, elements=elements)
+            msg = Message(id=None, sender=sender,
+                          receiver=receiver, elements=elements)
             MESSAGE_SIGNAL.receive.emit(msg)
             time.sleep(5)
 
