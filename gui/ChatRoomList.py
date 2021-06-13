@@ -28,7 +28,7 @@ class ChatRoomList(QWidget):
     def __init_gui(self):
         # 消息信号
         MESSAGE_SIGNAL.receive.connect(self.after_receive_message)
-        MESSAGE_SIGNAL.send.connect(self.after_send_message)
+        MESSAGE_SIGNAL.after_send.connect(self.after_send_message)
         self.setObjectName("chat-room-list")
         # 搜索框
         self._search_input = QLineEdit(self)
@@ -61,7 +61,7 @@ class ChatRoomList(QWidget):
         MESSAGE_SIGNAL.receive.emit(message)
 
     def send_message(self, message: Message):
-        MESSAGE_SIGNAL.send.emit(message)
+        MESSAGE_SIGNAL.after_send.emit(message)
 
     def after_receive_message(self, message: Message):
         # todo 接收到消息的信号后的处理方法

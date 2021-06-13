@@ -1,6 +1,6 @@
 from event.MessageSignal import MESSAGE_SIGNAL
 from remote.Client import Client
-from remote.Entity import Receiver, Sender
+from remote.Entity import Mine, Receiver, Sender
 from gui.MainWindow import MainWindow
 import sys
 import time
@@ -18,12 +18,15 @@ class TestClient(Client):
         for element in message.elements():
             print(str(element.content, encoding="utf8"))
 
-    def listen_receive_message(self):
+    def _listen_receive_message(self):
         """监听方法
         """
         t1 = threading.Thread(target=self.__listen_message)
         t1.start()
         # pass
+
+    def _login(self, mine: Mine):
+        return mine
 
     def __listen_message(self):
         while True:
@@ -63,12 +66,13 @@ if __name__ == '__main__':
     styleFile = FileUtil.readQss("./assets/style/global.qss")
     app.setStyleSheet(styleFile)
     client = TestClient()
+    client.do_login(mine=Mine(id="1", code="1", name="test",))
     mainWindow = MainWindow(title="测试", client=client)
     # 自定义 toolbar的按钮
     fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
     mainWindow.chat_input.toolbar.addWidget(fileSvg)
-    MESSAGE_SIGNAL.send.connect(log_send)
+    MESSAGE_SIGNAL.after_send.connect(log_send)
     LoggingFunc.connect_log()
     mainWindow.show()
-    mainWindow.listen_message()
+    # mainWindow.listen_message()
     sys.exit(app.exec_())

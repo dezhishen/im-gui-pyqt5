@@ -137,6 +137,6 @@ class Sender(Entity):
         return self._type
 
 
-class Self(Entity):
+class Mine(Entity):
     """自身信息
     """

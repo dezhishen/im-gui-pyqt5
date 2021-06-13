@@ -6,7 +6,7 @@ import logging
 
 def connect_log():
     MESSAGE_SIGNAL.receive.connect(logging_receive)
-    MESSAGE_SIGNAL.send.connect(logging_send)
+    MESSAGE_SIGNAL.after_send.connect(logging_send)
 
 
 def logging_receive(message: Message):
