@@ -29,11 +29,22 @@ class Client(object):
         # 好友列表相关信号绑定
         FRIENDS_GROUP_SIGNAL.do_load_friends.connect(self.do_refresh_frends)
         FRIENDS_GROUP_SIGNAL.do_load_groups.connect(self.do_refresh_groups)
-        MESSAGE_SIGNAL.receive.connect(self.storage_message)
+        MESSAGE_SIGNAL.receive.connect(self.storage_receive_message)
+        MESSAGE_SIGNAL.after_send.connect(self.storage_send_message)
 
-    def storage_message(self, message: Message):
+    def storage_send_message(self, message: Message):
+        MESSAGE_HISTORY_STORAGE.insert(
+            self.message_2_message_history(message=message, type="send")
+        )
+
+    def message_2_message_history(
+        self,
+        message: Message,
+        type: str = "receive"
+    ):
         message_history = MessageHistory()
         message_history.id = message.id
+        message_history.type = type
         message_history.message_date = message.message_date
         message_history.receiver_id = message.receiver.id
         message_history.receiver_type = message.receiver.type
@@ -46,8 +57,12 @@ class Client(object):
             e.type = v.type
             e.content = v.get_db_content()
             message_history.elements.append(e)
-        MESSAGE_HISTORY_STORAGE.insert(message_history)
-        pass
+        return message_history
+
+    def storage_receive_message(self, message: Message):
+        MESSAGE_HISTORY_STORAGE.insert(
+            self.message_2_message_history(message=message)
+        )
 
     @property
     def mine(self) -> Mine:
