@@ -63,13 +63,13 @@ class _MessageHistoryStorage:
             from message_history"+where_condition
         cursor.execute(sql, args)
         values = cursor.fetchall()
+        cursor.close()
         result = []
         for v in values:
             e = MessageHistory()
             e.id = v[0]
             e.sender_type = v[1]
             result.append(e)
-        cursor.close()
         return result
 
 
