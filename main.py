@@ -64,7 +64,7 @@ def log_send(message: Message):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    styleFile = FileUtil.readQss("./assets/style/global.qss")
+    styleFile = FileUtil.read_qss("./assets/style/global.qss")
     app.setStyleSheet(styleFile)
     client = TestClient()
     client.do_login(mine=Mine(id="1", code="1", name="test",))
