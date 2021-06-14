@@ -9,7 +9,6 @@ from tools.FileUtil import FileUtil
 from PyQt5.QtWidgets import QApplication
 from remote.Message import Message, MessageElement
 from PyQt5 import QtSvg
-import logging
 from event import LoggingFunc
 import alembic.config
 alembic.config.main(argv=[
@@ -64,12 +63,6 @@ def log_send(message: Message):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(
-        level=logging.DEBUG,
-        filename=r'./logs/message.log',
-        format="%(asctime)s %(name)s %(levelname)s %(message)s",
-        datefmt='%Y-%m-%d  %H:%M:%S %a'
-    )
     app = QApplication(sys.argv)
     styleFile = FileUtil.readQss("./assets/style/global.qss")
     app.setStyleSheet(styleFile)
@@ -80,6 +73,7 @@ if __name__ == '__main__':
     fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
     mainWindow.chat_input.toolbar.addWidget(fileSvg)
     MESSAGE_SIGNAL.after_send.connect(log_send)
+    # 日志
     LoggingFunc.connect_log()
     mainWindow.show()
     # mainWindow.listen_message()

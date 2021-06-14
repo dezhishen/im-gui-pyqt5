@@ -2,6 +2,12 @@
 from event.MessageSignal import MESSAGE_SIGNAL
 from remote.Message import Message
 import logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    filename=r'./logs/message.log',
+    format="%(asctime)s %(name)s %(levelname)s %(message)s",
+    datefmt='%Y-%m-%d  %H:%M:%S %a'
+)
 
 
 def connect_log():
