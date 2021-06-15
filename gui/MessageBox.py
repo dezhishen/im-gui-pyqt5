@@ -48,8 +48,8 @@ class MessageBox(QWidget):
         self._head = QLabel(self)
         # todo 布局
         main_box = QVBoxLayout(self)
-        title_context = QHBoxLayout(self)
-        content_box = QVBoxLayout(self)
+        title_context = QHBoxLayout()
+        content_box = QVBoxLayout()
         if self._message_type == "receive":
             title_context.addWidget(self._head)
             title_context.addWidget(self._name)
