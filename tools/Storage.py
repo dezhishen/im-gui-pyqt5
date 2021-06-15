@@ -123,6 +123,7 @@ class _MessageHistoryStorage:
             receiver_type: str = None,
             sender_id: str = None,
             sender_type: str = None,
+            order_by: str = " message_date desc ",
             limit: int = 30
     ) -> List[MessageHistory]:
 
@@ -157,7 +158,9 @@ class _MessageHistoryStorage:
                 message_date,\
                 receiver_type, \
                 receiver_id\
-            from message_history"+where_condition
+            from message_history"\
+                + where_condition +\
+            " order by "+order_by
         cursor.execute(sql, args)
         values = cursor.fetchall()
         cursor.close()
