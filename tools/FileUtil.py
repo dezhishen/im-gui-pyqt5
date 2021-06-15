@@ -1,7 +1,11 @@
-from tools.ThreadPoolUtil import THREAD_POOL
-from tools.CacheUtil import CACHE_UTIL
-import requests
 import uuid
+from concurrent.futures import ALL_COMPLETED, wait
+from mimetypes import guess_extension
+
+import requests
+
+from tools.CacheUtil import CACHE_UTIL
+from tools.ThreadPoolUtil import THREAD_POOL
 
 
 class FileUtil:
@@ -25,14 +29,18 @@ class FileUtil:
         return CACHE_UTIL.get(key)
 
     @staticmethod
-    def _download_url(url: str, file_path: str):
+    def _download_url(url: str, key: str, file_path: str):
         r = requests.get(url)
-        with open(file_path, "wb") as f:
+        type = guess_extension(
+            r.headers['content-type'].partition(';')[0].strip())
+        all_file_path = file_path+type
+        with open(all_file_path, "wb") as f:
             f.write(r.content)
-        CACHE_UTIL.set("file_cache:"+url, file_path)
+        CACHE_UTIL.set(key, all_file_path)
 
     @staticmethod
-    def get_storage_from_url(url: str, dir: str) -> str:
-        path = dir+"/"+uuid.uuid1()
-        THREAD_POOL.submit(FileUtil._download_url, url, path)
+    def get_storage_from_url(url: str, key: str, dir: str) -> str:
+        path = dir+"/"+str(uuid.uuid1())
+        t = THREAD_POOL.submit(FileUtil._download_url, url, key, path)
+        wait([t], return_when=ALL_COMPLETED)
         return path
