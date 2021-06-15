@@ -57,7 +57,7 @@ class ChatBox(QWidget):
         self.chat_box.layout().addWidget(mes_item_widget)
 
     def render_receive_message(self, message: Message):
-        return MessageBox(message=message, message_type="receive")
+        return MessageBox(message=message, message_type="receive", parent=self)
 
     def render_send_message(self, message: Message):
-        return MessageBox(message=message, message_type="send")
+        return MessageBox(message=message, message_type="send", parent=self)

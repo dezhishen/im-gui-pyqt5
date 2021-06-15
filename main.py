@@ -35,12 +35,16 @@ class TestClient(Client):
 
     def __listen_message(self):
         while True:
-            sender = Sender(id=1,
-                            type="pri",
-                            code="1",
-                            name="a",
-                            alias_name="别名",
-                            meta={"headerImageUrl": "test"})
+            sender = Sender(
+                id=1,
+                type="pri",
+                code="1",
+                name="a",
+                alias_name="别名",
+                header_image_url="https://avatars.githubusercontent.com/u/" +
+                "26274059?v=4",
+                meta={"headerImageUrl": "test"}
+            )
             receiver = Receiver(id=1,
                                 type="pri",
                                 code="1",
