@@ -1,6 +1,7 @@
-from remote.Message import Message, MessageElement
+from gui.MessageBox import MessageBox
+from remote.Message import Message
 from event.MessageSignal import MESSAGE_SIGNAL
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QListWidget, QToolBar,\
+from PyQt5.QtWidgets import QListWidget, QToolBar,\
     QVBoxLayout, QWidget
 
 
@@ -52,28 +53,11 @@ class ChatBox(QWidget):
         self.chat_box.layout().addWidget(mes_item_widget)
 
     def after_send_message(self, message: Message):
-        mes_item_widget = self.render_send_message(message)
+        mes_item_widget = self.render_send_message(message=message)
         self.chat_box.layout().addWidget(mes_item_widget)
 
     def render_receive_message(self, message: Message):
-        la = QHBoxLayout()
-        la.addWidget(QLabel(text=message.sender.get_name_for_show()))
-        for e in message.elements:
-            la.addWidget(self.render_item(e))
-        result = QWidget()
-        result.setLayout(la)
-        return result
+        return MessageBox(message=message, message_type="receive")
 
     def render_send_message(self, message: Message):
-        la = QHBoxLayout()
-        la.addWidget(QLabel(text=message.sender.get_name_for_show()))
-        for e in message.elements:
-            la.addWidget(self.render_item(e))
-        result = QWidget()
-        result.setLayout(la)
-        return result
-
-    def render_item(self, element: MessageElement):
-        if element.type == "text":
-            return QLabel(text=str(element.content, encoding="utf-8"))
-        return
+        return MessageBox(message=message, message_type="send")
