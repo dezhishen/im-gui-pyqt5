@@ -5,7 +5,7 @@ class _CacheUtil:
     _db: shelve.DbfilenameShelf = None
 
     def __init__(self) -> None:
-        self._db = shelve.open("message.cache")
+        self._db = shelve.open("./resources/cache/message.cache")
 
     def set(self, key: str, value: object):
         self._db[key] = value

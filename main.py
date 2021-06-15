@@ -1,20 +1,21 @@
+from tools.ThreadPoolUtil import THREAD_POOL
 from event.MessageSignal import MESSAGE_SIGNAL
 from remote.Client import Client
 from remote.Entity import Mine, Receiver, Sender
 from gui.MainWindow import MainWindow
 import sys
 import time
-import threading
 from tools.FileUtil import FileUtil
 from PyQt5.QtWidgets import QApplication
 from remote.Message import Message, MessageElement
 from PyQt5 import QtSvg
 from event import LoggingFunc
-import alembic.config
-alembic.config.main(argv=[
-    '--raiseerr',
-    'upgrade', 'head',
-])
+from alembic.config import Config
+import alembic.command
+config = Config('alembic.ini')
+config.attributes['configure_logger'] = False
+
+alembic.command.upgrade(config, 'head')
 
 
 class TestClient(Client):
@@ -25,8 +26,8 @@ class TestClient(Client):
     def _listen_receive_message(self):
         """监听方法
         """
-        t1 = threading.Thread(target=self.__listen_message)
-        t1.start()
+        THREAD_POOL.submit(self.__listen_message)
+        # wait([f], return_when=ALL_COMPLETED)
         # pass
 
     def _login(self, mine: Mine):
@@ -59,7 +60,7 @@ class TestClient(Client):
 
 
 def log_send(message: Message):
-    print("发送消息")
+    pass
 
 
 if __name__ == '__main__':

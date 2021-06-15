@@ -9,7 +9,7 @@ import uuid
 
 sqlite_mutex = threading.Lock()
 
-db_dir = "./message.db"
+db_dir = "./resources/db/message.db"
 
 
 class _MessageHistoryElementStorage:
