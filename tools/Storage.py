@@ -3,6 +3,7 @@ from sqlite3.dbapi2 import Connection, Cursor
 import threading
 import sqlite3
 from datetime import datetime
+from tools.FileUtil import FileUtil
 from typing import List
 from model.Base import MessageHistory, MessageHistoryElement
 import uuid
@@ -76,6 +77,7 @@ class _MessageHistoryStorage:
     _element: _MessageHistoryElementStorage = None
 
     def __init__(self) -> None:
+        FileUtil.create_dir_if_not_exists("./resources/db")
         self._conn = sqlite3.connect(db_dir, check_same_thread=False)
         self._element = _MessageHistoryElementStorage(self._conn)
 

@@ -1,4 +1,5 @@
 import typing
+import os
 import uuid
 from mimetypes import guess_extension
 import requests
@@ -12,6 +13,11 @@ class FileUtil:
 
     def __init__(self):
         pass
+
+    @staticmethod
+    def create_dir_if_not_exists(dir: str):
+        if not os.path.exists(dir):
+            os.makedirs(dir)
 
     @staticmethod
     def _process_key(key: str) -> str:
@@ -66,3 +72,6 @@ class FileUtil:
         THREAD_POOL.submit(FileUtil._download_url,
                            url,  path, callback)
         # wait([f], return_when=ALL_COMPLETED)
+
+
+FileUtil.create_dir_if_not_exists("./resources/images")
