@@ -1,3 +1,5 @@
+from event.LoginSignal import LOGIN_SIGNAL
+from gui.LoginWindow import LoginWindow
 from tools.ThreadPoolUtil import THREAD_POOL
 from event.MessageSignal import MESSAGE_SIGNAL
 from remote.Client import Client
@@ -19,6 +21,7 @@ alembic.command.upgrade(config, 'head')
 
 
 class TestClient(Client):
+
     def send_message(self, message: Message):
         for element in message.elements():
             print(str(element.content, encoding="utf8"))
@@ -72,14 +75,18 @@ if __name__ == '__main__':
     styleFile = FileUtil.read_qss("./assets/style/global.qss")
     app.setStyleSheet(styleFile)
     client = TestClient()
-    client.do_login(mine=Mine(id="1", code="1", name="test",))
-    mainWindow = MainWindow(title="测试", client=client)
-    # 自定义 toolbar的按钮
-    fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
-    mainWindow.chat_input.toolbar.addWidget(fileSvg)
-    MESSAGE_SIGNAL.after_send.connect(log_send)
-    # 日志
+
+    def open_main_window(mine: Mine):
+        mainWindow = MainWindow(title="测试", client=client)
+        # 自定义 toolbar的按钮
+        fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
+        mainWindow.chat_input.toolbar.addWidget(fileSvg)
+        MESSAGE_SIGNAL.after_send.connect(log_send)
+        mainWindow.show()
+        mainWindow.listen_message()
+    LOGIN_SIGNAL.after_login_success.connect(open_main_window)
+    # client.do_login(mine=Mine(id="1", code="1", name="test",))
+    login_win = LoginWindow()
+    login_win.show()
     LoggingFunc.connect_log()
-    mainWindow.show()
-    # mainWindow.listen_message()
     sys.exit(app.exec_())

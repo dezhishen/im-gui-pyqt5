@@ -1,7 +1,7 @@
 from remote.Entity import Mine
 from event.LoginSignal import LOGIN_SIGNAL
 import typing
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtWidgets
 
 
 class LoginWindow(QtWidgets.QWidget):
@@ -10,19 +10,35 @@ class LoginWindow(QtWidgets.QWidget):
     Args:
         QtWidgets ([type]): [description]
     """
+    _account: QtWidgets.QLineEdit = None
+    _password: QtWidgets.QLineEdit = None
 
-    def __init__(self, parent: typing.Optional['QtWidgets.QWidget'],
-                 flags: typing.Union[QtCore.Qt.WindowFlags,
-                                     QtCore.Qt.WindowType]) -> None:
-        super().__init__(parent=parent, flags=flags)
+    def __init__(self,
+                 parent: typing.Optional['QtWidgets.QWidget'] = None):
+        super().__init__(parent=parent)
+        self._init_gui()
+        LOGIN_SIGNAL.after_login_success.connect(self._close)
+
+    def _close(self, mine: Mine):
+        self.close()
 
     def _init_gui(self):
-
-        LOGIN_SIGNAL.login.emit()
-        pass
+        main_box = QtWidgets.QVBoxLayout()
+        self._account = QtWidgets.QLineEdit()
+        self._password = QtWidgets.QLineEdit()
+        self._password.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+        main_box.addWidget(self._account)
+        main_box.addWidget(self._password)
+        btn_box = QtWidgets.QHBoxLayout()
+        btn_box.addStretch(1)
+        ok_btn = QtWidgets.QPushButton("登录")
+        ok_btn.clicked.connect(self._login)
+        btn_box.addWidget(ok_btn)
+        main_box.addLayout(btn_box)
+        self.setLayout(main_box)
 
     def _login(self):
         mine = Mine()
-        mine.id = ""
-        mine.password = ""
+        mine.id = self._account.text()
+        mine.password = self._password.text()
         LOGIN_SIGNAL.login.emit(mine)
