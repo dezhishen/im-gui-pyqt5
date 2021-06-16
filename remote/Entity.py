@@ -11,10 +11,10 @@ class Entity(object):
     _meta = {}
 
     def __init__(self,
-                 id: str,
+                 id: str = None,
                  #  type: str,
-                 code: str,
-                 name: str,
+                 code: str = None,
+                 name: str = None,
                  alias_name: str = None,
                  header_image_url: str = None,
                  meta: dict = None) -> None:
@@ -140,3 +140,16 @@ class Sender(Entity):
 class Mine(Entity):
     """自身信息
     """
+    _password: str = None
+
+    @property
+    def password(self) -> str:
+        return self._password
+
+    @password.setter
+    def password(self, password: str):
+        self._password = password
+
+    @password.deleter
+    def password(self):
+        del self._password
