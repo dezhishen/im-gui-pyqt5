@@ -17,6 +17,7 @@ class MainWindow(QtWidgets.QWidget):
         self._client = client
         self._title = title
         self.__init_gui()
+        # LOGIN_SIGNAL.after_login_success.connect(self._show)
 
     def __init_gui(self):
         self._chat_room = ChatRoomList(self)

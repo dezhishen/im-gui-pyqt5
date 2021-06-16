@@ -1,7 +1,7 @@
 from remote.Entity import Mine
 from event.LoginSignal import LOGIN_SIGNAL
 import typing
-from PyQt5 import QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
 
 class LoginWindow(QtWidgets.QWidget):
@@ -15,7 +15,10 @@ class LoginWindow(QtWidgets.QWidget):
 
     def __init__(self,
                  parent: typing.Optional['QtWidgets.QWidget'] = None):
-        super().__init__(parent=parent)
+        super().__init__(
+            parent=parent,
+            flags=QtCore.Qt.WindowType.SubWindow
+        )
         self._init_gui()
         LOGIN_SIGNAL.after_login_success.connect(self._close)
 
