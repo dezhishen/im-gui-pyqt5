@@ -5,8 +5,8 @@ from gui.LoginWindow import LoginWindow
 
 
 class WindowController:
-    _login_window = None
-    _main_window = None
+    _login_window: LoginWindow = None
+    _main_window: MainWindow = None
 
     def __init__(self,  login_win: LoginWindow,
                  main_win: MainWindow) -> None:

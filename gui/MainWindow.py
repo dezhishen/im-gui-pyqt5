@@ -1,3 +1,4 @@
+from alembic.config import main
 from gui.ChatBox import ChatBox
 from gui.ChatRoomList import ChatRoomList
 from gui.ChatInput import ChatInput
@@ -30,14 +31,18 @@ class MainWindow(QtWidgets.QWidget):
         # self._chat_input.toolbar().addWidget(fileSvg)
         # 展示
         # 主窗口布局
-        mainLayOut = QtWidgets.QHBoxLayout()
-        mainLayOut.addWidget(self._chat_room)
+        # wid = QtWidgets.QWidget(self)
+        # wid.setSizePolicy(QtWidgets.QSizePolicy.Frame)
+        main_layout = QtWidgets.QHBoxLayout()
+        # mainLayOut = QtWidgets.QHBoxLayout()
+        main_layout.addWidget(self._chat_room)
         rightLayout = QtWidgets.QVBoxLayout()
         rightLayout.addWidget(self._chat_box)
         rightLayout.addWidget(self._chat_input)
-        mainLayOut.addLayout(rightLayout)
-        self.setLayout(mainLayOut)
+        main_layout.addLayout(rightLayout)
+        self.setLayout(main_layout)
         self.setWindowTitle(self._title)
+        # self.resize(1400, 900)  # 宽×高
 
     @property
     def chat_box(self):
@@ -50,9 +55,3 @@ class MainWindow(QtWidgets.QWidget):
     @property
     def chat_input(self):
         return self._chat_input
-
-    # def receive_message(self, message: Message):
-    #     MESSAGE_SIGNAL.receive.emit(message)
-
-    def listen_message(self):
-        self._client.start_listen_receive_message()

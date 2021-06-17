@@ -26,9 +26,9 @@ class LoginWindow(QtWidgets.QWidget):
         self.close()
 
     def _init_gui(self):
-        main_box = QtWidgets.QVBoxLayout()
-        self._account = QtWidgets.QLineEdit()
-        self._password = QtWidgets.QLineEdit()
+        main_box = QtWidgets.QVBoxLayout(self)
+        self._account = QtWidgets.QLineEdit(self)
+        self._password = QtWidgets.QLineEdit(self)
         self._password.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         main_box.addWidget(self._account)
         main_box.addWidget(self._password)
@@ -39,6 +39,7 @@ class LoginWindow(QtWidgets.QWidget):
         btn_box.addWidget(ok_btn)
         main_box.addLayout(btn_box)
         self.setLayout(main_box)
+        self.setWindowTitle("登录")
 
     def _login(self):
         mine = Mine()

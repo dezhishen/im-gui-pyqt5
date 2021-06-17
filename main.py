@@ -84,4 +84,5 @@ if __name__ == '__main__':
     login_win = LoginWindow()
     win_control = WindowController(login_win=login_win, main_win=main_window)
     win_control.load_login_window()
+    # win_control.load_main_window(mine=Mine())
     sys.exit(app.exec_())
