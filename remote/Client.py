@@ -30,6 +30,7 @@ class Client(object):
         FRIENDS_GROUP_SIGNAL.do_load_friends.connect(self.do_refresh_frends)
         FRIENDS_GROUP_SIGNAL.do_load_groups.connect(self.do_refresh_groups)
         MESSAGE_SIGNAL.receive.connect(self.storage_receive_message)
+        MESSAGE_SIGNAL.to_send.connect(self.do_send_message)
         MESSAGE_SIGNAL.after_send.connect(self.storage_send_message)
 
     def storage_send_message(self, message: Message):

@@ -78,7 +78,7 @@ class ChatInput(QWidget):
                         message_content_str,
                         encoding="utf-8"))
             ])
-        MESSAGE_SIGNAL.after_send.emit(the_message)
+        MESSAGE_SIGNAL.to_send.emit(the_message)
         self._text_edit.clear()
         self._text_edit.setFocus()
 

@@ -45,9 +45,6 @@ class ChatBox(QWidget):
     def toolbar(self):
         return self._toolbar
 
-    def send_message(self, message: Message):
-        MESSAGE_SIGNAL.after_send.emit(message)
-
     def after_receive_message(self, message: Message):
         mes_item_widget = self.render_receive_message(message)
         self.chat_box.layout().addWidget(mes_item_widget)
