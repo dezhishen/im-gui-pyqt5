@@ -1,8 +1,6 @@
-from alembic.config import main
 from gui.ChatBox import ChatBox
 from gui.ChatRoomList import ChatRoomList
 from gui.ChatInput import ChatInput
-from remote.Client import Client
 # from remote.Message import Message
 from PyQt5 import QtWidgets
 
@@ -11,12 +9,9 @@ class MainWindow(QtWidgets.QWidget):
     _chat_box = None
     _chat_room = None
     _chat_input = None
-    _client = None
 
-    def __init__(self, title: str, client: Client):
+    def __init__(self):
         super().__init__()
-        self._client = client
-        self._title = title
         self.__init_gui()
         # LOGIN_SIGNAL.after_login_success.connect(self._show)
 
@@ -41,7 +36,7 @@ class MainWindow(QtWidgets.QWidget):
         rightLayout.addWidget(self._chat_input)
         main_layout.addLayout(rightLayout)
         self.setLayout(main_layout)
-        self.setWindowTitle(self._title)
+        self.setWindowTitle("主窗口")
         # self.resize(1400, 900)  # 宽×高
 
     @property

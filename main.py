@@ -77,7 +77,7 @@ if __name__ == '__main__':
     client = TestClient()
     LoggingFunc.connect_log()
 
-    main_window = MainWindow(title="测试", client=client)
+    main_window = MainWindow()
     # 自定义 toolbar的按钮
     fileSvg = QtSvg.QSvgWidget("./assets/icons/wenjian.svg")
     main_window.chat_input.toolbar.addWidget(fileSvg)
