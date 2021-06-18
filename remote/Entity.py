@@ -1,9 +1,14 @@
 from typing import Dict
 
 
+class EntityType():
+    PRIVATE = "private"
+    GROUP = "group"
+
+
 class Entity(object):
     _id = None
-    # _type = None
+    _type = None
     _code = None
     _name = None
     _header_image_url = None
@@ -12,7 +17,7 @@ class Entity(object):
 
     def __init__(self,
                  id: str = None,
-                 #  type: str,
+                 type: str = EntityType.PRIVATE,
                  code: str = None,
                  name: str = None,
                  alias_name: str = None,
@@ -20,7 +25,7 @@ class Entity(object):
                  meta: dict = None) -> None:
         super().__init__()
         self._id = id
-        # self._type = type
+        self._type = type
         self._code = code
         self._name = name
         self._alias_name = alias_name
@@ -36,6 +41,14 @@ class Entity(object):
     @id.setter
     def id(self, id: str):
         self._id = id
+
+    @property
+    def type(self) -> str:
+        return self._type
+
+    @type.setter
+    def type(self, type: str):
+        self._type = type
 
     @property
     def code(self) -> str:
@@ -92,7 +105,6 @@ class Entity(object):
 class Receiver(Entity):
     """接收人
     """
-    _type = None
 
     def __init__(self,
                  id: str,
@@ -102,23 +114,14 @@ class Receiver(Entity):
                  alias_name: str,
                  header_image_url: str = None,
                  meta: dict = None) -> None:
-        super().__init__(id, code, name, alias_name=alias_name,
+        super().__init__(id, type, code, name, alias_name=alias_name,
                          header_image_url=header_image_url, meta=meta)
-        self._type = type
-
-    @property
-    def type(self) -> str:
-        return self._type
-
-    @type.setter
-    def type(self, type: str):
-        self._type = type
 
 
 class Sender(Entity):
     """发送人
     """
-    _type = None
+    _msg_from = None
 
     def __init__(self,
                  id: str,
@@ -126,15 +129,27 @@ class Sender(Entity):
                  code: str,
                  name: str,
                  alias_name: str,
+                 msg_from: Entity = None,
                  header_image_url: str = None,
                  meta: dict = None) -> None:
-        super().__init__(id, code, name, alias_name=alias_name,
+        super().__init__(id, type, code, name, alias_name=alias_name,
                          header_image_url=header_image_url, meta=meta)
-        self._type = type
+        if msg_from is None:
+            self._msg_from = Entity(
+                id, type, code, name, alias_name=alias_name,
+                header_image_url=header_image_url, meta=meta)
 
     @property
-    def type(self) -> str:
-        return self._type
+    def msg_from(self) -> Entity:
+        return self._msg_from
+
+    @property
+    def msg_from_type(self) -> str:
+        return self.msg_from.type
+
+    @property
+    def msg_from_id(self) -> str:
+        return self.msg_from.id
 
 
 class Mine(Entity):
